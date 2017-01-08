@@ -1,6 +1,6 @@
 = MoonFreeType Reference Manual
 Stefano Trettel
-v0.1, 2016-12-21
+v0.1, 2017-01-08
 :toc: left
 :toclevels: 4
 :stylesdir: ./
