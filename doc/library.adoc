@@ -1,0 +1,18 @@
+
+[[library]]
+=== The _library_ object
+
+* _library_ = *init_freetype*( ) +
+[small]#Creates a new library instance. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Init_FreeType++[FT_Init_FreeType].#
+
+* *done_freetype*(_library_) +
+*library:done*( ) +
+[small]#Deletes the given library and all its children (faces, etc.) +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Done_FreeType++[FT_Done_FreeType].#
+
+* _major_, _minor_, _patch_ = *library_version*(_library_) +
+_major_, _minor_, _patch_ = *library:version*( ) +
+[small]#Returns the library version. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-version.html#FT_Library_Version++[FT_Library_Version].#
+

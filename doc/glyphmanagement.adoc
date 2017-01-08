@@ -1,0 +1,47 @@
+
+=== Glyph Management
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#++[Glyph Management].#
+
+* _glyph_ = *get_glyph*(_face_) +
+_glyph_ = *face:get_glyph*( ) +
+[small]#Creates a glyph object. The glyph image is extracted from the current glyph slot of the given _face_. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Get_Glyph++[FT_Get_Glyph].#
+
+* _newglyph_ = *glyph_copy*(_glyph_) +
+_newglyph_ = *glyph:copy*( ) +
+[small]#Creates a glyph object copying it from another one. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Copy++[FT_Glyph_Copy].#
+
+* *done_glyph*(_glyph_) +
+*glyph:done*( ) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Done_Glyph++[FT_Done_Glyph].#
+
+* <<bbox, _cbox_>> = *glyph_get_cbox*(_glyph_, <<bboxmode, _bboxmode_>>) +
+<<bbox, _cbox_>> = *glyph:get_cbox*(<<bboxmode, _bboxmode_>>) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Get_CBox++[FT_Glyph_Get_CBox].#
+
+* *glyph_to_bitmap*(_glyph_, <<rendermode, _rendermode_>> [, _origin_ [, _destroy_]]) +
+*glyph:to_bitmap*(<<rendermode, _rendermode_>> [, _origin_ [, _destroy_]]) +
+[small]#The _origin_ parameter is a <<vector, vector>> and defaults to _nil_ (null vector, no translation). +
+The _destroy_ parameter is a boolean and defaults to _true_. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_To_Bitmap++[FT_Glyph_To_Bitmap].#
+
+* *glyph_transform*(_glyph_, _matrix_, _delta_) +
+*glyph:transform*(, _matrix_, _delta_) +
+[small]#The _matrix_ and _delta_ parameters are a <<matrix, matrix>> and <<vector, vector>>, respectively. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Transform++[FT_Glyph_Transform].#
+
+'''
+
+The following methods are available in order to access the contents of the glyph object: +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph++[FT_Glyph].#
+
+
+* <<glyphformat, _glyphformat_>> = *glyph:format*( ) +
+* <<vector, _vector_>> = *glyph:advance*( ) +
+* <<bitmap, _bitmap_>> = *glyph:bitmap*( ) +
+* <<bitmapdata, _bitmapdata_>> = *glyph:bitmapdata*( ) +
+* <<outline, _outline_>> = *glyph:outline*( ) +
+* <<outlinedata, _outlinedata_>> = *glyph:outlinedata*( ) +
+

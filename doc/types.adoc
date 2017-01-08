@@ -1,0 +1,160 @@
+
+== Data types
+
+Most FreeType data types are represented in MoonFreeType as Lua tables, which are described in this
+section. 
+
+There is an (almost) one-to-one correspondence between the table fields and the fields
+of the underlying C structs. Refer to the FreeType documentation for their meanings.
+
+'''
+[[bbox]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_BBox++[FT_BBox].#
+
+* *bbox* = { +
+[small]#{tS} *xmin*, *ymin*: integers, +
+{tS} *xmax*, *ymax*: integers# +
+}
+
+'''
+[[bitmapdata]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Bitmap++[FT_Bitmap].#
+
+* *bitmapdata* = { +
+[small]#{tS} *rows*, *width*, *pitch*, *left*, *top*: integers, +
+{tS} *pixel_mode*: <<pixelmode, _pixelmode_>>, +
+{tS} *num_grays*: integer (for '_gray_' pixel mode only), +
+{tS} *buffer*: binary string (#buffer = rows * abs(pitch))# +
+}
+
+
+'''
+[[bitmapsize]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Bitmap_Size++[FT_Bitmap_Size].#
+
+* *bitmapsize* = { +
+[small]#{tS} *height*, *width*: integers, +
+{tS} *size*: integer, +
+{tS} *x_ppem*, *y_ppem*: integers# +
+}
+
+'''
+[[charmap]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_CharMapRec++[FT_CharMapRec].#
+
+* *charmap* = { +
+[small]#{tS} *encoding*: <<encoding, _encoding_>>, +
+{tS} *platform_id*, *encoding_id*: integers, +
+{tS} *platform_name*, *encoding_name*: strings (text versions of ids, may be _nil_)# +
+}
+
+
+'''
+[[glyphdata]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_GlyphSlot++[FT_GlyphSlot].#
+
+* *glyphdata* = { +
+[small]#{tS} *metrics*: <<glyphmetrics, _glyphmetrics_>>, +
+{tS} *linear_hori_advance*, *linear_vert_advance*: integers, +
+{tS} *advance*: <<matrix, _matrix_>>, +
+{tS} *format*: <<glyphformat, _glyphformat_>>, +
+{tS} *bitmap*: <<bitmapdata, _bitmapdata_>> (for '_bitmap_' format  only), +
+{tS} *outline*: <<outlinedata, _outlinedata_ >> (for '_outline_' and '_plotter_' formats only), +
+{tS} *subglyphs*: array of <<subglyph, _subglyph_ >> (for '_composite_' format  only), +
+{tS} *control_data*: binary string (optional), +
+{tS} *lsb_delta*, *rsb_delta*: integers# +
+}
+
+NOTE: The fields *bitmap_left*, and *bitmap_top* are moved in the <<bitmapdata, bitmapdata>> table (as *bitmap.left* and *bitmap.top*, respectively).
+
+
+'''
+[[glyphmetrics]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Glyph_Metrics++[FT_Glyph_Metrics].#
+
+* *glyphmetrics* = { +
+[small]#{tS} *width*, *height*: integers, +
+{tS} *hori_bearing_x*, *hori_bearing_y*, *hori_advance*: integers, +
+{tS} *vert_bearing_x*, *vert_bearing_y*, *vert_advance*: integers# +
+}
+
+'''
+[[matrix]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Matrix++[FT_Matrix].#
+
+* *matrix* = { +
+[small]#{tS} *xx*, *xy*: integers, +
+{tS} *yx*, *yy*: integers# +
+}
+
+'''
+[[outlinedata]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline++[FT_Outline].#
+
+* *outlinedata* = { +
+[small]#{tS} *points*: array of <<vector, _vector_>>, +
+{tS} *tags*: array of integer codes (#tags = #points), +
+{tS} *type*: array of <<pointtype, _pointtype_>> (#type = #points), +
+{tS} *scanmode*: array of <<scanmode, _scanmode_>> (#scanmode = #points), +
+{tS} *contours*: array of integers (indices in points array, 1-based), +
+{tS} *flags*: <<outlineflags, _outlineflags_>> (integer code)# +
+}
+
+'''
+[[sizemetrics]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_Metrics++[FT_Size_Metrics].#
+
+* *sizemetrics* = { +
+[small]#{tS} *x_ppem*, *y_ppem*: integers, +
+{tS} *y_scale*, *y_scale*: integers, +
+{tS} *ascender*, *descender*: integers, +
+{tS} *height*: integer, +
+{tS} *max_advance*: integer# +
+}
+
+'''
+[[subglyph]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_SubGlyph_Info++[FT_Get_SubGlyph_Info].#
+
+* *subglyph* = { +
+[small]#{tS} *index*: integer (glyph index, 1-based), +
+{tS} *flags*: <<subglyphflags, _subglyphflags_>> (integer code), +
+{tS} *arg1*, *arg2*: integers, +
+{tS} *transform*: <<matrix, _matrix_>># +
+}
+
+'''
+[[vector]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Vector++[FT_Vector].#
+
+* *vector* = { +
+[small]#{tS} *x*, *y*: integers# +
+}
+
+
+
+////
+11yy scaffolding
+'''
+[[zzz]]
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Zzz++[FT_Zzz].#
+
+* *zzz* = { +
+[small]#{tS} **: integer, +
+{tS} **: integer, +
+{tS} **: integer# +
+}
+
+////

@@ -1,0 +1,51 @@
+
+== Introduction
+
+MoonFreeType is meant to be used similarly to FreeType (apart, of course, 
+from programming in Lua instead of C). The following example shows its basic
+usage: you create an instance of the library, load faces from font files,
+retrieve glyphs from faces, and use them for whatever your purpose is.
+
+.Basic usage example
+[source, lua]
+----
+ft = require("moonfreetype")
+
+-- Create an instance of the library:
+lib = ft.init_freetype()
+
+-- Load a font face from file, and rescale it:
+face = ft.new_face(lib, "myfavouritefonte.ttf")
+face:set_pixel_sizes(0, 48)
+
+-- Load the glyph for the character 'X' in the glyph slot:
+face:load_char('X')
+-- Get the glyph's data and print some of the fields:
+glyph = face:glyph()
+print("format", glyph.format)
+print("metrics.width", glyph.metrics.width)
+print("metrics.height", glyph.metrics.height)
+-- ...
+
+-- Delete the library
+lib:done() -- short for ft.done_freetype(lib)
+----
+
+In MoonFreeType, FreeType functions are bound to by Lua functions which are members of the *ft* table.
+Each such function has a name which is usually a https://en.wikipedia.org/wiki/Snake_case[snake case]
+version of the original (e.g. *ft.init_freetype* for *FT_Init_FreeType*, *ft.new_face* for *FT_New_Face*, and so on). 
+
+Some of the FreeType data types - for example libraries and faces - are represented in MoonFreeType as 
+Lua objects (userdata with methods), while some other are represented as simple Lua tables with fields
+that reflect the underlying C structs.
+
+Functions that are related to objects are also available as methods, for example 
+*face:set_pixel_sizes*(...) is the same as *ft.set_pixel_sizes*(face,...).
+Methods are also provided to access the properties of objects, 
+e.g. *face:num_glyphs*(&nbsp;), *face:family_name*(&nbsp;), etc.
+
+All these function and methods, together with some additional utilities, are described in the sections
+that follow (that purposedly reflect the structure of the
+https://www.freetype.org/freetype2/docs/reference/ft2-toc.html[FreeType API Reference]).
+
+

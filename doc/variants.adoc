@@ -1,0 +1,25 @@
+
+=== Glyph variants
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#++[Glyph Variants].#
+
+* _glyphindex_ = *get_char_variant_index*(_face_, _charcode_, _selector_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetCharVariantIndex++[FT_Face_GetCharVariantIndex ].#
+
+* _boolean_ = *get_char_variant_is_default*(_face_, _charcode_, _selector_) +
+[small]#Returns _nil_ if not a variant. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetCharVariantIsDefault++[FT_Face_GetCharVariantIsDefault].#
+
+* _selectorlist_ = *get_variant_selectors*(_face_) +
+[small]#Returns an array of variants selectors (integer code points), or _nil_. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetVariantSelectors++[FT_Face_GetVariantSelectors].#
+
+* _selectorlist_  = *get_variants_of_char*(_face_, _charcode_) +
+[small]#Returns an array of variants selectors (integer code points), or _nil_. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetVariantsOfChar++[FT_Face_GetVariantsOfChar].#
+
+* _charcodelist_ = *get_chars_of_variant*(_face_, _selector_) +
+[small]#Returns an array of charcodes (integers), or _nil_. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetCharsOfVariant++[FT_Face_GetCharsOfVariant].#
+
+

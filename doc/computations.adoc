@@ -1,0 +1,31 @@
+
+=== Computations
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-computations.html++[Computations].#
+
+
+*  _result_ = *muldiv*(_a_, _b_, _c_) +
+_result_ = *mulfix*(_a_, _b_) +
+_result_ = *divfix*(_a_, _b_) +
+_result_ = *roundfix*(_a_) +
+_result_ = *ceilfix*(_a_) +
+_result_ = *floorfix*(_a_) +
+
+* _result_ = *sin*(_angle_) +
+_result_ = *cos*(_angle_) +
+_result_ = *tan*(_angle_) +
+_angle_ = *atan2*(_x_, _y_) +
+_angle_ = *angle_diff*(_angle1_, _angle2_) +
+
+* <<vector, _vector_>> = *vector_unit*(_angle_) +
+<<vector, _vector_>> = *vector_rotate*(<<vector, _vector_>>, unit_angle_) +
+_length_ = *vector_length*(<<vector, _vector_>>) +
+_length_, _angle_ = *vector_polarize*(<<vector, _vector_>>) +
+<<vector, _vector_>> = *vector_from_polar*(_length_, _angle_) +
+
+* <<vector, _vector_>> = *vector_transform*(<<vector, _vector_>>, <<matrix, _matrix_>>) +
+<<matrix, _matrix_>> = *matrix_invert*(<<matrix, _matrix_>>) +
+<<matrix, _matrix_>> = *matrix_multiply*(<<matrix, _matrix1_>>, <<matrix, _matrix2_>>) +
+
+The constants *ANGLE_PI*, *ANGLE_PI4*, *ANGLE_2PI*, *ANGLE_PI2* are also available as members of the *ft* table.
+

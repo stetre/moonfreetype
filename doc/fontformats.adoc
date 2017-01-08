@@ -1,0 +1,8 @@
+
+=== Font Formats
+
+* _string_ = *get_font_format*(_face_) +
+[small]#May return _nil_. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-font_formats.html#FT_Get_Font_Format++[FT_Get_Font_Format].#
+
+

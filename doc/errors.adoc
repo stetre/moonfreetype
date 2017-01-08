@@ -1,0 +1,13 @@
+
+== Error Codes
+
+Error codes are not exposed directly. 
+MoonFreeTypes automatically performs error checking whenever it calls a FreeType
+function, and if an error occurs, it raises a Lua
+link:++http://www.lua.org/manual/5.3/manual.html#pdf-error++[error](&nbsp;) 
+passing it the text version of the 
+link:++https://www.freetype.org/freetype2/docs/reference/ft2-error_code_values.html++[FreeType error code] as the message parameter.
+
+This behaviour can be overridden by using
+link:++http://www.lua.org/manual/5.3/manual.html#pdf-pcall++[pcall](&nbsp;).
+

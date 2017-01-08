@@ -1,0 +1,76 @@
+
+
+=== Base interface
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#++[Base Interface].#
+
+* *select_charmap*(_face_, <<encoding, _encoding_>>|_index_) +
+[small]#_index_: index (1-based) in the charmaps list for this face. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Select_Charmap++[FT_Select_Charmap], 
+link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Set_Charmap++[FT_Set_Charmap].#
+
+* *set_pixel_sizes*(_face_, _width_, _height_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Set_Pixel_Sizes++[FT_Set_Pixel_Sizes].#
+
+* *set_char_size*(_face_, _width_, _height_, _hresolution_, _vresolution_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Set_Char_Size++[FT_Set_Char_Size].#
+
+* *select_size*(_face_, _strikeindex_) +
+[small]#_strikeindex_: index (1-based) in the _available_sizes_ for this face. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Select_Size++[FT_Select_Size].#
+
+* *request_size*(_face_, <<sizerequesttype, _sizerequesttype_>>, _width_, _height_, _hresolution_, _vresolution_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Request_Size++[FT_Request_Size], 
+link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_RequestRec++[FT_Size_RequestRec].#
+
+
+[[load_char]]
+* *load_char*(_face_, _charcode_ [, <<loadflags, _loadflags_>>]) +
+[small]#_charcode_: character code (integer) or ascii character (string). +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Load_Char++[FT_Load_Char].#
+
+[[load_glyph]]
+*  *load_glyph*(_face_, _glyphindex_  [, <<loadflags, _loadflags_>>]) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Load_Glyph++[FT_Load_Glyph].#
+
+* _glyphindex_ = *get_char_index*(_face_, _charcode_) +
+[small]#_charcode_: character code (integer) or ascii character (string). +
+Returns _nil_ if the character code is not defined. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Char_Index++[FT_Get_Char_Index].#
+
+* _glyphindex_ = *get_name_index*(_face_, _glyphname_) +
+[small]#Returns _nil_ if there is no glyph with such name. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Name_Index++[FT_Get_Name_Index].#
+
+* _glyphname_ = *get_glyph_name*(_face_, _glyphindex_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Glyph_Name++[FT_Get_Glyph_Name].#
+
+* _name_ = *get_postscript_name*(_face_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Postscript_Name++[FT_Get_Postscript_Name].#
+
+* _charcode_, _glyphindex_ = *get_first_char*(_face_) +
+_charcode_, _glyphindex_ = *get_next_char*(_face_, _charcode_) +
+[small]#_charcode_: character code (integer) or ascii character (string). Returned as integer. +
+Both return _nil_ if there is no first or next character. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_First_Char++[FT_Get_First_Char], 
+link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Next_Char++[FT_Get_Next_Char].#
+
+* *set_transform*(_face_ [, _matrix_ [, _delta_]]) +
+[small]#_matrix_: the 2x2 transformation <<matrix, matrix>> (_nil_ for identity matrix). +
+_delta_: the translation <<vector, vector>> (_nil_ for null vector). +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Set_Transform++[FT_Set_Transform].#
+
+* *render_glyph*(_face_, <<rendermode, _rendermode_>>) +
+[small]#Convert the current glyph image to a bitmap. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Render_Glyph++[FT_Render_Glyph].#
+
+* <<fstypeflags, _fstypeflags_>> = *get_fstype_flags*(_face_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_FSType_Flags++[FT_Get_FSType_Flags].#
+
+* <<vector, _vector_>> = *get_kerning*(_face_, _leftglyph_, _rightglyph_, <<kerningmode, _kerningmode_>>) +
+[small]#_leftglyph_, _rightglyph_: integers (glyph indices, 1-based). +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Kerning++[FT_Get_Kerning].#
+
+* kerning = *get_track_kerning*(_face_, _pointsize_, _degree_) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_Track_Kerning++[FT_Get_Track_Kerning].#
+

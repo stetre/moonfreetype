@@ -1,0 +1,12 @@
+
+=== Quick retrieval of advance values
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-quick_advance.html#++[Quick Advance].#
+
+* _advance_ = *get_advance*(_face_, _glyphindex_, <<loadflags, _loadflags_>>) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-quick_advance.html#FT_Get_Advance++[FT_Get_Advance].#
+
+* _advancelist_ = *get_advances*(_face_, _glyphindex_, _count_ <<loadflags, _loadflags_>>) +
+[small]#Returns a list of advance values (integers) +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-quick_advance.html#FT_Get_Advances++[FT_Get_Advances].#
+

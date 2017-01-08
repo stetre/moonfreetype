@@ -1,0 +1,27 @@
+
+=== Size Management
+
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#++[Size Management].#
+
+* _size_ = *new_size*(_face_) +
+_size_ = *face:new_size*( ) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_New_Size++[FT_New_Size].#
+
+* *done_size*(_size_) +
+*size:done*( ) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_Done_Size++[FT_Done_Size].#
+
+* *activate_size*(_size_) +
+*size:activate*( ) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_Activate_Size++[FT_Activate_Size].#
+
+////
+scaffolding
+* **(_size_) +
+*size:*( ) +
+[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_++[FT_].#
+
+
+////
+
+

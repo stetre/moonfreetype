@@ -1,0 +1,58 @@
+
+== Implementation notes
+
+The following FreeType (v2.6.1) API functionalities are not - or not yet - supported by MoonFreeType:
+
+
+
+Core API
+
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-mac_specific.html#++[Mac Specific Interface].
+
+
+Format-Specific API
+
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-multiple_masters.html#++[Multiple Masters].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-truetype_tables.html#++[TrueType Tables].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-type1_tables.html#++[Type 1 Tables].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-sfnt_names.html#++[SFNT Names].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-bdf_fonts.html#++[BDF and PCF Files].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-cid_fonts.html#++[CID Fonts].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-pfr_fonts.html#++[PFR Fonts].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-winfnt_fonts.html#++[Windows FNT Files].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-gasp_table.html#++[Gasp Table].
+
+
+Controlling FreeType Modules
+
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-auto_hinter.html#++[Auto Hinter].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-cff_driver.html#++[CFF Driver].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-tt_driver.html#++[TrueType Driver].
+
+
+
+Cache Sub-System
+
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-cache_subsystem.html#++[Cache Sub-System].
+
+
+
+Support API
+
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-list_processing.html#++[List Processing].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-raster.html#++[Scanline Converter].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-system_interface.html#++[System Interface].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-module_management.html#++[Module Management].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-gzip.html#++[GZIP Streams].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-lzw.html#++[LZW Streams].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-bzip2.html#++[BZIP2 Streams].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-lcd_filtering.html#++[LCD Filtering].
+
+Miscellanea
+
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-ot_validation.html#++[OpenType Validation].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-incremental.html#++[Incremental Loading].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-truetype_engine.html#++[TrueType Engine].
+* link:++https://www.freetype.org/freetype2/docs/reference/ft2-gx_validation.html#++[TrueTypeGX/AAT Validation].
+
+

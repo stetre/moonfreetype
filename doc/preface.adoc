@@ -1,0 +1,53 @@
+
+== Preface
+
+This is the reference manual of *MoonFreeType*, which is a 
+http://www.lua.org[*Lua*] binding library for the
+https://www.freetype.org[FreeType Library].
+footnote:[
+This manual is written in
+http://www.methods.co.nz/asciidoc/[AsciiDoc], rendered with
+http://asciidoctor.org/[AsciiDoctor] and a CSS from the
+https://github.com/asciidoctor/asciidoctor-stylesheet-factory[AsciiDoctor Stylesheet Factory].
+The PDF version is produced with
+https://github.com/asciidoctor/asciidoctor-pdf[AsciiDoctor-Pdf].]
+
+It is assumed that the reader is familiar with both FreeType and the Lua programming language.
+
+For convenience of reference, this document contains external (deep) links to the 
+http://www.lua.org/manual/5.3/manual.html[Lua Reference Manual] and to the
+https://www.freetype.org/freetype2/docs/documentation.html[FreeType Documentation].
+
+=== Getting and installing
+
+For installation intructions, refer to the README file in the 
+https://github.com/stetre/moonfreetype[*MoonFreeType official repository*]
+on GitHub.
+
+=== Module organization
+
+The MoonFreeType module is loaded using Lua's 
+http://www.lua.org/manual/5.3/manual.html#pdf-require[require]() and
+returns a table containing the functions it provides 
+(as usual with Lua modules). This manual assumes that such
+table is named *ft*, i.e. that it is loaded with:
+
+[source,lua,indent=1]
+----
+ft = require("moonfreetype")
+----
+
+but nothing forbids the use of a different name.
+
+=== Examples
+
+A few examples can be found in the *examples/* directory of the release package.
+
+=== License
+
+MoonFreeType is released under the *MIT/X11 license* (same as
+http://www.lua.org/license.html[Lua], and with the same only requirement to give proper
+credits to the original author). 
+The copyright notice is in the LICENSE file in the base directory
+of the https://github.com/stetre/moonfreetype[official repository] on GitHub.
+
