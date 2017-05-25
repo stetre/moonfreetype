@@ -1,4 +1,4 @@
-##MoonFreeType: Lua bindings for FreeType
+## MoonFreeType: Lua bindings for FreeType
 
 MoonFreeType is a Lua binding library for the 
 [FreeType library](https://www.freetype.org/).
