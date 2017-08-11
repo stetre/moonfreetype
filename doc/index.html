@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
 <meta name="author" content="Stefano Trettel">
 <title>MoonFreeType Reference Manual</title>
 <style>
@@ -696,12 +696,14 @@ p.tableblock.header { color: #6d6e71; }
 </style>
 <style>
 .listingblock .pygments .hll { background-color: #ffffcc }
-.listingblock .pygments  { background: #ffffff; }
+.listingblock .pygments, .listingblock .pygments code { background: #ffffff; }
 .listingblock .pygments .tok-c { color: #aaaaaa; font-style: italic } /* Comment */
 .listingblock .pygments .tok-err { color: #FF0000; background-color: #FFAAAA } /* Error */
 .listingblock .pygments .tok-k { color: #0000aa } /* Keyword */
+.listingblock .pygments .tok-ch { color: #aaaaaa; font-style: italic } /* Comment.Hashbang */
 .listingblock .pygments .tok-cm { color: #aaaaaa; font-style: italic } /* Comment.Multiline */
 .listingblock .pygments .tok-cp { color: #4c8317 } /* Comment.Preproc */
+.listingblock .pygments .tok-cpf { color: #aaaaaa; font-style: italic } /* Comment.PreprocFile */
 .listingblock .pygments .tok-c1 { color: #aaaaaa; font-style: italic } /* Comment.Single */
 .listingblock .pygments .tok-cs { color: #0000aa; font-style: italic } /* Comment.Special */
 .listingblock .pygments .tok-gd { color: #aa0000 } /* Generic.Deleted */
@@ -739,8 +741,10 @@ p.tableblock.header { color: #6d6e71; }
 .listingblock .pygments .tok-mh { color: #009999 } /* Literal.Number.Hex */
 .listingblock .pygments .tok-mi { color: #009999 } /* Literal.Number.Integer */
 .listingblock .pygments .tok-mo { color: #009999 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sa { color: #aa5500 } /* Literal.String.Affix */
 .listingblock .pygments .tok-sb { color: #aa5500 } /* Literal.String.Backtick */
 .listingblock .pygments .tok-sc { color: #aa5500 } /* Literal.String.Char */
+.listingblock .pygments .tok-dl { color: #aa5500 } /* Literal.String.Delimiter */
 .listingblock .pygments .tok-sd { color: #aa5500 } /* Literal.String.Doc */
 .listingblock .pygments .tok-s2 { color: #aa5500 } /* Literal.String.Double */
 .listingblock .pygments .tok-se { color: #aa5500 } /* Literal.String.Escape */
@@ -751,9 +755,11 @@ p.tableblock.header { color: #6d6e71; }
 .listingblock .pygments .tok-s1 { color: #aa5500 } /* Literal.String.Single */
 .listingblock .pygments .tok-ss { color: #0000aa } /* Literal.String.Symbol */
 .listingblock .pygments .tok-bp { color: #00aaaa } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-fm { color: #00aa00 } /* Name.Function.Magic */
 .listingblock .pygments .tok-vc { color: #aa0000 } /* Name.Variable.Class */
 .listingblock .pygments .tok-vg { color: #aa0000 } /* Name.Variable.Global */
 .listingblock .pygments .tok-vi { color: #aa0000 } /* Name.Variable.Instance */
+.listingblock .pygments .tok-vm { color: #aa0000 } /* Name.Variable.Magic */
 .listingblock .pygments .tok-il { color: #009999 } /* Literal.Number.Integer.Long */
 </style>
 </head>
@@ -856,7 +862,7 @@ table is named <strong>ft</strong>, i.e. that it is loaded with:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="lua"> <span class="tok-n">ft</span> <span class="tok-o">=</span> <span class="tok-nb">require</span><span class="tok-p">(</span><span class="tok-s2">&quot;</span><span class="tok-s">moonfreetype&quot;</span><span class="tok-p">)</span></code></pre>
+<pre class="pygments highlight"><code data-lang="lua"><span></span> <span class="tok-n">ft</span> <span class="tok-o">=</span> <span class="tok-nb">require</span><span class="tok-p">(</span><span class="tok-s2">&quot;moonfreetype&quot;</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -893,22 +899,22 @@ retrieve glyphs from faces, and use them for whatever your purpose is.</p>
 <div class="listingblock">
 <div class="title">Basic usage example</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="lua"><span class="tok-n">ft</span> <span class="tok-o">=</span> <span class="tok-nb">require</span><span class="tok-p">(</span><span class="tok-s2">&quot;</span><span class="tok-s">moonfreetype&quot;</span><span class="tok-p">)</span>
+<pre class="pygments highlight"><code data-lang="lua"><span></span><span class="tok-n">ft</span> <span class="tok-o">=</span> <span class="tok-nb">require</span><span class="tok-p">(</span><span class="tok-s2">&quot;moonfreetype&quot;</span><span class="tok-p">)</span>
 
 <span class="tok-c1">-- Create an instance of the library:</span>
 <span class="tok-n">lib</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-p">.</span><span class="tok-n">init_freetype</span><span class="tok-p">()</span>
 
 <span class="tok-c1">-- Load a font face from file, and rescale it:</span>
-<span class="tok-n">face</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-p">.</span><span class="tok-n">new_face</span><span class="tok-p">(</span><span class="tok-n">lib</span><span class="tok-p">,</span> <span class="tok-s2">&quot;</span><span class="tok-s">myfavouritefonte.ttf&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">face</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-p">.</span><span class="tok-n">new_face</span><span class="tok-p">(</span><span class="tok-n">lib</span><span class="tok-p">,</span> <span class="tok-s2">&quot;myfavouritefonte.ttf&quot;</span><span class="tok-p">)</span>
 <span class="tok-n">face</span><span class="tok-p">:</span><span class="tok-n">set_pixel_sizes</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span> <span class="tok-mi">48</span><span class="tok-p">)</span>
 
 <span class="tok-c1">-- Load the glyph for the character &#39;X&#39; in the glyph slot:</span>
-<span class="tok-n">face</span><span class="tok-p">:</span><span class="tok-n">load_char</span><span class="tok-p">(</span><span class="tok-s1">&#39;</span><span class="tok-s">X&#39;</span><span class="tok-p">)</span>
+<span class="tok-n">face</span><span class="tok-p">:</span><span class="tok-n">load_char</span><span class="tok-p">(</span><span class="tok-s1">&#39;X&#39;</span><span class="tok-p">)</span>
 <span class="tok-c1">-- Get the glyph&#39;s data and print some of the fields:</span>
 <span class="tok-n">glyph</span> <span class="tok-o">=</span> <span class="tok-n">face</span><span class="tok-p">:</span><span class="tok-n">glyph</span><span class="tok-p">()</span>
-<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;</span><span class="tok-s">format&quot;</span><span class="tok-p">,</span> <span class="tok-n">glyph</span><span class="tok-p">.</span><span class="tok-n">format</span><span class="tok-p">)</span>
-<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;</span><span class="tok-s">metrics.width&quot;</span><span class="tok-p">,</span> <span class="tok-n">glyph</span><span class="tok-p">.</span><span class="tok-n">metrics</span><span class="tok-p">.</span><span class="tok-n">width</span><span class="tok-p">)</span>
-<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;</span><span class="tok-s">metrics.height&quot;</span><span class="tok-p">,</span> <span class="tok-n">glyph</span><span class="tok-p">.</span><span class="tok-n">metrics</span><span class="tok-p">.</span><span class="tok-n">height</span><span class="tok-p">)</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;format&quot;</span><span class="tok-p">,</span> <span class="tok-n">glyph</span><span class="tok-p">.</span><span class="tok-n">format</span><span class="tok-p">)</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;metrics.width&quot;</span><span class="tok-p">,</span> <span class="tok-n">glyph</span><span class="tok-p">.</span><span class="tok-n">metrics</span><span class="tok-p">.</span><span class="tok-n">width</span><span class="tok-p">)</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;metrics.height&quot;</span><span class="tok-p">,</span> <span class="tok-n">glyph</span><span class="tok-p">.</span><span class="tok-n">metrics</span><span class="tok-p">.</span><span class="tok-n">height</span><span class="tok-p">)</span>
 <span class="tok-c1">-- ...</span>
 
 <span class="tok-c1">-- Delete the library</span>
@@ -1734,8 +1740,8 @@ of the underlying C structs. Refer to the FreeType documentation for their meani
 &#8192;&#8192;&#8192;&#8192; <strong>advance</strong>: <a href="#matrix"><em>matrix</em></a>,<br>
 &#8192;&#8192;&#8192;&#8192; <strong>format</strong>: <a href="#glyphformat"><em>glyphformat</em></a>,<br>
 &#8192;&#8192;&#8192;&#8192; <strong>bitmap</strong>: <a href="#bitmapdata"><em>bitmapdata</em></a> (for '<em>bitmap</em>' format  only),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>outline</strong>: <a href="#outlinedata"><em>outlinedata</em></a> (for '<em>outline</em>' and '<em>plotter</em>' formats only),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>subglyphs</strong>: array of <a href="#subglyph"><em>subglyph</em></a> (for '<em>composite</em>' format  only),<br>
+&#8192;&#8192;&#8192;&#8192; <strong>outline</strong>: <a href="#outlinedata"><em>outlinedata</em> </a> (for '<em>outline</em>' and '<em>plotter</em>' formats only),<br>
+&#8192;&#8192;&#8192;&#8192; <strong>subglyphs</strong>: array of <a href="#subglyph"><em>subglyph</em> </a> (for '<em>composite</em>' format  only),<br>
 &#8192;&#8192;&#8192;&#8192; <strong>control_data</strong>: binary string (optional),<br>
 &#8192;&#8192;&#8192;&#8192; <strong>lsb_delta</strong>, <strong>rsb_delta</strong>: integers</span><br>
 }</p>
@@ -2182,7 +2188,7 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-truetype_eng
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2017-01-08 17:47:51 CET
+Last updated 2017-08-09 20:11:14 CEST
 </div>
 </div>
 </body>
