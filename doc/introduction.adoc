@@ -15,7 +15,7 @@ ft = require("moonfreetype")
 lib = ft.init_freetype()
 
 -- Load a font face from file, and rescale it:
-face = ft.new_face(lib, "myfavouritefonte.ttf")
+face = ft.new_face(lib, "myfavouritefont.ttf")
 face:set_pixel_sizes(0, 48)
 
 -- Load the glyph for the character 'X' in the glyph slot:
@@ -33,16 +33,16 @@ lib:done() -- short for ft.done_freetype(lib)
 
 In MoonFreeType, FreeType functions are bound to by Lua functions which are members of the *ft* table.
 Each such function has a name which is usually a https://en.wikipedia.org/wiki/Snake_case[snake case]
-version of the original (e.g. *ft.init_freetype* for *FT_Init_FreeType*, *ft.new_face* for *FT_New_Face*, and so on). 
+version of the original (e.g. _ft.init_freetype(&nbsp;)_ for _FT_Init_FreeType(&nbsp;)_, _ft.new_face(&nbsp;)_ for _FT_New_Face(&nbsp;)_, and so on).
 
 Some of the FreeType data types - for example libraries and faces - are represented in MoonFreeType as 
 Lua objects (userdata with methods), while some other are represented as simple Lua tables with fields
 that reflect the underlying C structs.
 
 Functions that are related to objects are also available as methods, for example 
-*face:set_pixel_sizes*(...) is the same as *ft.set_pixel_sizes*(face,...).
+_face:set_pixel_sizes(...)_ is the same as _ft.set_pixel_sizes(face,...)_.
 Methods are also provided to access the properties of objects, 
-e.g. *face:num_glyphs*(&nbsp;), *face:family_name*(&nbsp;), etc.
+e.g. _face:num_glyphs(&nbsp;)_, _face:family_name(&nbsp;)_, etc.
 
 All these function and methods, together with some additional utilities, are described in the sections
 that follow (that purposedly reflect the structure of the

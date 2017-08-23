@@ -3,84 +3,68 @@
 
 [small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#++[Glyph Stroker].#
 
-* _stroker_ = *stroker_new*(_library_) +
-_stroker_ = *library:stroker_new*( ) +
+* _stroker_ = *stroker_new*(<<library, _library_>>) +
 [small]#Returns an handle to a new strokerobject. +
+Also available as _library:stroker_new(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_New++[FT_Stroker_New].#
 
 * *stroker_done*(_stroker_) +
-*stroker:done*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Done++[FT_Stroker_Done].#
-
+[small]#Also available as _stroker:done(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Done++[FT_Stroker_Done].#
 
 * *stroker_beginsubpath*(_stroker_, _to_, _open_) +
-*stroker:beginsubpath*(_to_, _open_) +
 [small]#The _to_ parameter is a <<vector, _vector_>> and the _open_ parameter is a boolean. +
+Also available as _stroker:beginsubpath(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_BeginSubPath++[FT_Stroker_BeginSubPath].#
 
 * *stroker_endsubpath*(_stroker_) +
-*stroker:endsubpath*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_EndSubPath++[FT_Stroker_EndSubPath].#
+[small]#Also available as _stroker:endsubpath(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_EndSubPath++[FT_Stroker_EndSubPath].#
 
 * *stroker_rewind*(_stroker_) +
-*stroker:rewind*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Rewind++[FT_Stroker_Rewind].#
+[small]#Also available as _stroker:rewind(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Rewind++[FT_Stroker_Rewind].#
 
 * *stroker_set*(_stroker_, _radius_, <<linecap, _linecap_>>, <<linejoin, _linejoin_>>, _miterlimit_) +
-*stroker:set*(_radius_, <<linecap, _linecap_>>, <<linejoin, _linejoin_>>, _miterlimit_) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Set++[FT_Stroker_Set].#
+[small]#Also available as _stroker:set(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Set++[FT_Stroker_Set].#
 
 * *stroker_conicto*(_stroker_, _control_, _to_) +
-*stroker:conicto*(_control_, _to_) +
 [small]#The _control_ and _to_ parameters are <<vector, _vectors_>>. +
+Also available as _stroker:conicto(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ConicTo++[FT_Stroker_ConicTo].#
 
-
 * *stroker_cubicto*(_stroker_, _control1_, _control2_, _to_) +
-*stroker:cubicto*(_control1_, _control2_, _to_) +
 [small]#The _control1_, _control2_, and _to_ parameters are <<vector, _vectors_>>. +
+Also available as _stroker:cubicto(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_CubicTo++[FT_Stroker_CubicTo].#
 
 * *stroker_lineto*(_stroker_, _to_) +
-*stroker:lineto*(_to_) +
 [small]#The _to_ parameter is a <<vector, _vector_>>. +
+Also available as _stroker:lineto(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_LineTo++[FT_Stroker_LineTo].#
 
 * _numpoints_, _numcontours_ = *stroker_getcounts*(_stroker_) +
-_numpoints_, _numcontours_ = *stroker:getcounts*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetCounts++[FT_Stroker_GetCounts].#
+[small]#Also available as _stroker:getcounts(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetCounts++[FT_Stroker_GetCounts].#
 
 * _numpoints_, _numcontours_ = *stroker_getbordercounts*(_stroker_, <<border, _border_>>) +
-_numpoints_, _numcontours_ = *stroker:getbordercounts*(<<border, _border_>>) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetBorderCounts++[FT_Stroker_GetBorderCounts].#
-
+[small]#Also available as _stroker:getbordercounts(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetBorderCounts++[FT_Stroker_GetBorderCounts].#
 
 * *stroker_parseoutline*(_stroker_, <<outline, _outline_>>, _opened_) +
-*stroker:parseoutline*(<<outline, _outline_>>, _opened_) +
 [small]#The _opened_ parameter is a boolean. +
 Stroker and outline must belong to the same library. +
+Also available as _stroker:parseoutline(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ParseOutline++[FT_Stroker_ParseOutline].#
 
 * *stroker_export*(_stroker_, <<outline, _outline_>>) +
-*stroker:export*(<<outline, _outline_>>) +
 [small]#Stroker and outline must belong to the same library. +
+Also available as _stroker:export(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Export++[FT_Stroker_Export].#
 
-
 * *stroker_exportborder*(_stroker_, <<border, _border_>>, <<outline, _outline_>>) +
-*stroker:exportborder*(<<border, _border_>>, <<outline, _outline_>>) +
 [small]#Stroker and outline must belong to the same library. +
+Also available as _stroker:exportborder(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ExportBorder++[FT_Stroker_ExportBorder].#
-
-
-////
-* <<, __>> = *stroker:*( ) +
-
-scaffolding 4yy
-* *stroker_*(_stroker_) +
-*stroker:*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_++[FT_].#
-
-////
-
 

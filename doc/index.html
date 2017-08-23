@@ -808,7 +808,7 @@ p.tableblock.header { color: #6d6e71; }
 </ul>
 </li>
 <li><a href="#_error_codes">Error Codes</a></li>
-<li><a href="#_data_types">Data types</a></li>
+<li><a href="#_structs">Structs</a></li>
 <li><a href="#enumerations">Enumerations and bitfields</a></li>
 <li><a href="#_additional_utilities">Additional utilities</a></li>
 <li><a href="#_code_snippets">Code snippets</a></li>
@@ -905,7 +905,7 @@ retrieve glyphs from faces, and use them for whatever your purpose is.</p>
 <span class="tok-n">lib</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-p">.</span><span class="tok-n">init_freetype</span><span class="tok-p">()</span>
 
 <span class="tok-c1">-- Load a font face from file, and rescale it:</span>
-<span class="tok-n">face</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-p">.</span><span class="tok-n">new_face</span><span class="tok-p">(</span><span class="tok-n">lib</span><span class="tok-p">,</span> <span class="tok-s2">&quot;myfavouritefonte.ttf&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">face</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-p">.</span><span class="tok-n">new_face</span><span class="tok-p">(</span><span class="tok-n">lib</span><span class="tok-p">,</span> <span class="tok-s2">&quot;myfavouritefont.ttf&quot;</span><span class="tok-p">)</span>
 <span class="tok-n">face</span><span class="tok-p">:</span><span class="tok-n">set_pixel_sizes</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span> <span class="tok-mi">48</span><span class="tok-p">)</span>
 
 <span class="tok-c1">-- Load the glyph for the character &#39;X&#39; in the glyph slot:</span>
@@ -924,7 +924,7 @@ retrieve glyphs from faces, and use them for whatever your purpose is.</p>
 <div class="paragraph">
 <p>In MoonFreeType, FreeType functions are bound to by Lua functions which are members of the <strong>ft</strong> table.
 Each such function has a name which is usually a <a href="https://en.wikipedia.org/wiki/Snake_case">snake case</a>
-version of the original (e.g. <strong>ft.init_freetype</strong> for <strong>FT_Init_FreeType</strong>, <strong>ft.new_face</strong> for <strong>FT_New_Face</strong>, and so on).</p>
+version of the original (e.g. <em>ft.init_freetype(&nbsp;)</em> for <em>FT_Init_FreeType(&nbsp;)</em>, <em>ft.new_face(&nbsp;)</em> for <em>FT_New_Face(&nbsp;)</em>, and so on).</p>
 </div>
 <div class="paragraph">
 <p>Some of the FreeType data types - for example libraries and faces - are represented in MoonFreeType as
@@ -933,9 +933,9 @@ that reflect the underlying C structs.</p>
 </div>
 <div class="paragraph">
 <p>Functions that are related to objects are also available as methods, for example
-<strong>face:set_pixel_sizes</strong>(&#8230;&#8203;) is the same as <strong>ft.set_pixel_sizes</strong>(face,&#8230;&#8203;).
+<em>face:set_pixel_sizes(&#8230;&#8203;)</em> is the same as <em>ft.set_pixel_sizes(face,&#8230;&#8203;)</em>.
 Methods are also provided to access the properties of objects,
-e.g. <strong>face:num_glyphs</strong>(&nbsp;), <strong>face:family_name</strong>(&nbsp;), etc.</p>
+e.g. <em>face:num_glyphs(&nbsp;)</em>, <em>face:family_name(&nbsp;)</em>, etc.</p>
 </div>
 <div class="paragraph">
 <p>All these function and methods, together with some additional utilities, are described in the sections
@@ -958,14 +958,14 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interfa
 </li>
 <li>
 <p><strong>done_freetype</strong>(<em>library</em>)<br>
-<strong>library:done</strong>( )<br>
 <span class="small">Deletes the given library and all its children (faces, etc.)<br>
+Also available as <em>library:done(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Done_FreeType">FT_Done_FreeType</a>.</span></p>
 </li>
 <li>
 <p><em>major</em>, <em>minor</em>, <em>patch</em> = <strong>library_version</strong>(<em>library</em>)<br>
-<em>major</em>, <em>minor</em>, <em>patch</em> = <strong>library:version</strong>( )<br>
 <span class="small">Returns the library version.<br>
+Also available as <em>library:version(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-version.html#FT_Library_Version">FT_Library_Version</a>.</span></p>
 </li>
 </ul>
@@ -976,18 +976,18 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-version.html
 <div id="new_face" class="ulist">
 <ul>
 <li>
-<p><em>face</em> = <strong>new_face</strong>(<em>library</em>, <em>filename</em> [, <em>index</em>, <em>instance</em>])<br>
-<em>face</em> = <strong>library:new_face</strong>(<em>filename</em> [, <em>index</em>, <em>instance</em>])<br>
+<p><em>face</em> = <strong>new_face</strong>(<a href="#library"><em>library</em></a>, <em>filename</em> [, <em>index</em>, <em>instance</em>])<br>
 <span class="small">Creates a new face.<br>
 <em>filename</em>: the path to the font file (a string).<br>
 <em>index</em>: the index of the face in the font file (0-based, defaults to 0).<br>
 <em>instance</em>: named instance index (defaults to 0)<br>
+Also available as <em>library:new_face(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_New_Face">FT_New_Face</a>.</span></p>
 </li>
 <li>
 <p><strong>done_face</strong>(<em>face</em>)<br>
-<strong>face:done</strong>( )<br>
 <span class="small">Deletes the given <em>face</em>.<br>
+Also available as <em>face:done(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Done_Face">FT_Done_Face</a>.</span></p>
 </li>
 </ul>
@@ -1009,93 +1009,90 @@ For example, the function <strong>set_pixel_sizes</strong>(<em>face</em>, <em>wi
 </div>
 <hr>
 <div class="paragraph">
-<p>The following methods can be used to access the properties of a <em>face</em> object (that is, the fields of the underlying FT_FaceRec struct).<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FaceRec">FT_FaceRec</a>.</span></p>
+<p>The following methods can be used to access the properties of a <em>face</em> object, that is, the fields of the underlying
+<a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FaceRec">FT_FaceRec</a> struct.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>n</em> = <strong>face:num_faces</strong>( )<br></p>
+<p><em>n</em> = face<strong>:num_faces</strong>( )<br></p>
 </li>
 <li>
-<p><em>index</em>, <em>instance</em> = <strong>face:face_index</strong>( )<br>
+<p><em>index</em>, <em>instance</em> = face<strong>:face_index</strong>( )<br>
 <span class="small">Returns the <em>index</em> of the face in the font file (0-based) and the
 named <em>instance</em> index.</span></p>
 </li>
 <li>
-<p><em>boolean</em> = <strong>face:has_horizontal</strong>( )<br>
-<em>boolean</em> = <strong>face:has_vertical</strong>( )<br>
-<em>boolean</em> = <strong>face:has_kerning</strong>( )<br>
-<em>boolean</em> = <strong>face:is_scalable</strong>( )<br>
-<em>boolean</em> = <strong>face:is_sfnt</strong>( )<br>
-<em>boolean</em> = <strong>face:is_fixed_width</strong>( )<br>
-<em>boolean</em> = <strong>face:has_fixed_sizes</strong>( )<br>
-<em>boolean</em> = <strong>face:has_fast_glyphs</strong>( )<br>
-<em>boolean</em> = <strong>face:has_glyph_names</strong>( )<br>
-<em>boolean</em> = <strong>face:has_multiple_masters</strong>( )<br>
-<em>boolean</em> = <strong>face:is_cid_keyed</strong>( )<br>
-<em>boolean</em> = <strong>face:is_tricky</strong>( )<br>
-<em>boolean</em> = <strong>face:has_color</strong>( )<br>
+<p><em>boolean</em> = face<strong>:has_horizontal</strong>( )<br>
+<em>boolean</em> = face<strong>:has_vertical</strong>( )<br>
+<em>boolean</em> = face<strong>:has_kerning</strong>( )<br>
+<em>boolean</em> = face<strong>:is_scalable</strong>( )<br>
+<em>boolean</em> = face<strong>:is_sfnt</strong>( )<br>
+<em>boolean</em> = face<strong>:is_fixed_width</strong>( )<br>
+<em>boolean</em> = face<strong>:has_fixed_sizes</strong>( )<br>
+<em>boolean</em> = face<strong>:has_fast_glyphs</strong>( )<br>
+<em>boolean</em> = face<strong>:has_glyph_names</strong>( )<br>
+<em>boolean</em> = face<strong>:has_multiple_masters</strong>( )<br>
+<em>boolean</em> = face<strong>:is_cid_keyed</strong>( )<br>
+<em>boolean</em> = face<strong>:is_tricky</strong>( )<br>
+<em>boolean</em> = face<strong>:has_color</strong>( )<br>
 <span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FACE_FLAG_XXX">FT_FACE_FLAG_XXX</a>.</span></p>
 </li>
 <li>
-<p><em>boolean</em> = <strong>face:is_italic</strong>( )<br>
-<em>boolean</em> = <strong>face:is_bold</strong>( )<br>
+<p><em>boolean</em> = face<strong>:is_italic</strong>( )<br>
+<em>boolean</em> = face<strong>:is_bold</strong>( )<br>
 <span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_STYLE_FLAG_XXX">FT_STYLE_FLAG_XXX</a>.</span></p>
 </li>
 <li>
-<p><em>n</em> = <strong>face:num_glyphs</strong>( )<br></p>
+<p><em>n</em> = face<strong>:num_glyphs</strong>( )<br></p>
 </li>
 <li>
-<p><em>string</em> = <strong>face:family_name</strong>( )<br>
-<em>string</em> = <strong>face:style_name</strong>( )<br>
+<p><em>string</em> = face<strong>:family_name</strong>( )<br>
+<em>string</em> = face<strong>:style_name</strong>( )<br>
 <span class="small">May return <em>nil</em> (these fields are optional).</span></p>
 </li>
 <li>
-<p><em>n</em> = <strong>face:num_fixed_sizes</strong>( )<br>
-<em>list</em> = <strong>face:available_sizes</strong>( )<br>
-<span class="small">Returns a list of <a href="#bitmapsize"><em>bitmapsize</em></a> elements, indexed from 1 to <em>num_fixed_sizes</em> (inclusive).<br>
-Returns <em>nil</em> if <em>num_fixed_sizes</em> is 0.</span></p>
+<p><em>n</em> = face<strong>:num_fixed_sizes</strong>( )<br>
+{<a href="#bitmapsize"><em>bitmapsize</em></a>} = face<strong>:available_sizes</strong>( )<br>
+<span class="small">Returns <em>nil</em> if <em>num_fixed_sizes</em> is 0, otherwise returns a table with <em>num_fixed_sizes</em> elements.</span></p>
 </li>
 <li>
-<p><em>n</em> = <strong>face:num_charmaps</strong>( )<br>
-<em>list</em> = <strong>face:charmaps</strong>( )<br>
-<span class="small">Returns a list of <a href="#charmap"><em>charmap</em></a> elements, indexed from 1 to <em>num_charmaps</em> (inclusive).<br>
-Returns <em>nil</em> if <em>num_charmaps</em> is 0.</span></p>
+<p><em>n</em> = face<strong>:num_charmaps</strong>( )<br>
+<span class="&lt;&lt;charmap">Returns <em>nil</em> if <em>num__charmaps</em> is 0, otherwise returns a table with <em>num_charmaps</em> elements.</span></p>
 </li>
 <li>
-<p><a href="#bbox"><em>bbox</em></a> = <strong>face:bbox</strong>( )<br>
-n = <strong>face:units_per_em</strong>( )<br>
-n = <strong>face:ascender</strong>( )<br>
-n = <strong>face:descender</strong>( )<br>
-n = <strong>face:height</strong>( )<br>
-n = <strong>face:max_advance_width</strong>( )<br>
-n = <strong>face:max_advance_height</strong>( )<br>
-n = <strong>face:underline_position</strong>( )<br>
-n = <strong>face:underline_thickness</strong>( )<br>
+<p><a href="#bbox"><em>bbox</em></a> = face<strong>:bbox</strong>( )<br>
+n = face<strong>:units_per_em</strong>( )<br>
+n = face<strong>:ascender</strong>( )<br>
+n = face<strong>:descender</strong>( )<br>
+n = face<strong>:height</strong>( )<br>
+n = face<strong>:max_advance_width</strong>( )<br>
+n = face<strong>:max_advance_height</strong>( )<br>
+n = face<strong>:underline_position</strong>( )<br>
+n = face<strong>:underline_thickness</strong>( )<br>
 <span class="small">These are relevant only to scalable outlines (see <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FaceRec">FT_FaceRec</a>).</span></p>
 </li>
 <li>
-<p><a href="#glyphdata"><em>glyphdata</em></a> = <strong>face:glyph</strong>( )<br>
+<p><a href="#glyphdata"><em>glyphdata</em></a> = face<strong>:glyph</strong>( )<br>
 <span class="small">Returns the data for the current glyph, i.e. the last loaded in the face&#8217;s glyph slot with a
 <a href="#load_char">load_char</a>(&nbsp;) or <a href="#load_glyph">load_glyph</a>(&nbsp;) call.</span></p>
 </li>
 <li>
-<p><a href="#bitmap"><em>bitmap</em></a>, <em>left</em>, <em>top</em> = <strong>face:glyph_bitmap</strong>( )<br>
+<p><a href="#bitmap"><em>bitmap</em></a>, <em>left</em>, <em>top</em> = face<strong>:glyph_bitmap</strong>( )<br>
 <span class="small">Returns an handle to the bitmap object and the left and top bearing for the current glyph.<br>
 Returns <em>nil</em> if the glyph format is not '<em>bitmap</em>'.</span></p>
 </li>
 <li>
-<p><a href="#outline"><em>outline</em></a> = <strong>face:glyph_outline</strong>( )<br>
+<p><a href="#outline"><em>outline</em></a> = face<strong>:glyph_outline</strong>( )<br>
 <span class="small">Returns an handle to the outline object for the current glyph.<br>
 Returns <em>nil</em> if the glyph format is not '<em>outline</em>'.</span></p>
 </li>
 <li>
-<p><a href="#sizemetrics"><em>sizemetrics</em></a> = <strong>face:size</strong>( )<br>
+<p><a href="#sizemetrics"><em>sizemetrics</em></a> = face<strong>:size</strong>( )<br>
 <span class="small">Returns the metrics for the current active size for this face.</span></p>
 </li>
 <li>
-<p><a href="#charmap"><em>charmap</em></a> = <strong>face:charmap</strong>( )<br>
+<p><a href="#charmap"><em>charmap</em></a> = face<strong>:charmap</strong>( )<br>
 <span class="small">Returns the current active <a href="#charmap"><em>charmap</em></a> for this face.</span></p>
 </li>
 </ul>
@@ -1220,17 +1217,17 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interfa
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetCharVariantIsDefault">FT_Face_GetCharVariantIsDefault</a>.</span></p>
 </li>
 <li>
-<p><em>selectorlist</em> = <strong>get_variant_selectors</strong>(<em>face</em>)<br>
+<p>{<em>integer</em>} = <strong>get_variant_selectors</strong>(<em>face</em>)<br>
 <span class="small">Returns an array of variants selectors (integer code points), or <em>nil</em>.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetVariantSelectors">FT_Face_GetVariantSelectors</a>.</span></p>
 </li>
 <li>
-<p><em>selectorlist</em>  = <strong>get_variants_of_char</strong>(<em>face</em>, <em>charcode</em>)<br>
+<p>{<em>integer</em>}  = <strong>get_variants_of_char</strong>(<em>face</em>, <em>charcode</em>)<br>
 <span class="small">Returns an array of variants selectors (integer code points), or <em>nil</em>.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetVariantsOfChar">FT_Face_GetVariantsOfChar</a>.</span></p>
 </li>
 <li>
-<p><em>charcodelist</em> = <strong>get_chars_of_variant</strong>(<em>face</em>, <em>selector</em>)<br>
+<p>{<em>integer</em>} = <strong>get_chars_of_variant</strong>(<em>face</em>, <em>selector</em>)<br>
 <span class="small">Returns an array of charcodes (integers), or <em>nil</em>.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_variants.html#FT_Face_GetCharsOfVariant">FT_Face_GetCharsOfVariant</a>.</span></p>
 </li>
@@ -1245,66 +1242,65 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_varian
 <div class="ulist">
 <ul>
 <li>
-<p><em>glyph</em> = <strong>get_glyph</strong>(<em>face</em>)<br>
-<em>glyph</em> = <strong>face:get_glyph</strong>( )<br>
+<p><em>glyph</em> = <strong>get_glyph</strong>(<a href="#face"><em>face</em></a>)<br>
 <span class="small">Creates a glyph object. The glyph image is extracted from the current glyph slot of the given <em>face</em>.<br>
+Also available as <em>face:get_glyph(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Get_Glyph">FT_Get_Glyph</a>.</span></p>
 </li>
 <li>
 <p><em>newglyph</em> = <strong>glyph_copy</strong>(<em>glyph</em>)<br>
-<em>newglyph</em> = <strong>glyph:copy</strong>( )<br>
 <span class="small">Creates a glyph object copying it from another one.<br>
+Also available as <em>glyph:copy(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Copy">FT_Glyph_Copy</a>.</span></p>
 </li>
 <li>
 <p><strong>done_glyph</strong>(<em>glyph</em>)<br>
-<strong>glyph:done</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Done_Glyph">FT_Done_Glyph</a>.</span></p>
+<span class="small">Also available as <em>glyph:done(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Done_Glyph">FT_Done_Glyph</a>.</span></p>
 </li>
 <li>
 <p><a href="#bbox"><em>cbox</em></a> = <strong>glyph_get_cbox</strong>(<em>glyph</em>, <a href="#bboxmode"><em>bboxmode</em></a>)<br>
-<a href="#bbox"><em>cbox</em></a> = <strong>glyph:get_cbox</strong>(<a href="#bboxmode"><em>bboxmode</em></a>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Get_CBox">FT_Glyph_Get_CBox</a>.</span></p>
+<span class="small">Also available as <em>glyph:get_cbox(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Get_CBox">FT_Glyph_Get_CBox</a>.</span></p>
 </li>
 <li>
 <p><strong>glyph_to_bitmap</strong>(<em>glyph</em>, <a href="#rendermode"><em>rendermode</em></a> [, <em>origin</em> [, <em>destroy</em>]])<br>
-<strong>glyph:to_bitmap</strong>(<a href="#rendermode"><em>rendermode</em></a> [, <em>origin</em> [, <em>destroy</em>]])<br>
 <span class="small">The <em>origin</em> parameter is a <a href="#vector">vector</a> and defaults to <em>nil</em> (null vector, no translation).<br>
 The <em>destroy</em> parameter is a boolean and defaults to <em>true</em>.<br>
+Also available as <em>glyph:to_bitmap(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_To_Bitmap">FT_Glyph_To_Bitmap</a>.</span></p>
 </li>
 <li>
 <p><strong>glyph_transform</strong>(<em>glyph</em>, <em>matrix</em>, <em>delta</em>)<br>
-<strong>glyph:transform</strong>(, <em>matrix</em>, <em>delta</em>)<br>
-<span class="small">The <em>matrix</em> and <em>delta</em> parameters are a <a href="#matrix">matrix</a> and <a href="#vector">vector</a>, respectively.<br>
+<span class="small">Also available as <em>glyph:transform(&nbsp;)</em> method.<br>
+The <em>matrix</em> and <em>delta</em> parameters are a <a href="#matrix">matrix</a> and <a href="#vector">vector</a>, respectively.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_Transform">FT_Glyph_Transform</a>.</span></p>
 </li>
 </ul>
 </div>
 <hr>
 <div class="paragraph">
-<p>The following methods are available in order to access the contents of the glyph object:<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph">FT_Glyph</a>.</span></p>
+<p>The following methods are available in order to access the contents of the glyph object (see <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph">FT_Glyph</a>):</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#glyphformat"><em>glyphformat</em></a> = <strong>glyph:format</strong>( )<br></p>
+<p><a href="#glyphformat"><em>glyphformat</em></a> = glyph<strong>:format</strong>( )<br></p>
 </li>
 <li>
-<p><a href="#vector"><em>vector</em></a> = <strong>glyph:advance</strong>( )<br></p>
+<p><a href="#vector"><em>vector</em></a> = glyph<strong>:advance</strong>( )<br></p>
 </li>
 <li>
-<p><a href="#bitmap"><em>bitmap</em></a> = <strong>glyph:bitmap</strong>( )<br></p>
+<p><a href="#bitmap"><em>bitmap</em></a> = glyph<strong>:bitmap</strong>( )<br></p>
 </li>
 <li>
-<p><a href="#bitmapdata"><em>bitmapdata</em></a> = <strong>glyph:bitmapdata</strong>( )<br></p>
+<p><a href="#bitmapdata"><em>bitmapdata</em></a> = glyph<strong>:bitmapdata</strong>( )<br></p>
 </li>
 <li>
-<p><a href="#outline"><em>outline</em></a> = <strong>glyph:outline</strong>( )<br></p>
+<p><a href="#outline"><em>outline</em></a> = glyph<strong>:outline</strong>( )<br></p>
 </li>
 <li>
-<p><a href="#outlinedata"><em>outlinedata</em></a> = <strong>glyph:outlinedata</strong>( )<br></p>
+<p><a href="#outlinedata"><em>outlinedata</em></a> = glyph<strong>:outlinedata</strong>( )<br></p>
 </li>
 </ul>
 </div>
@@ -1317,19 +1313,19 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_manage
 <div class="ulist">
 <ul>
 <li>
-<p><em>size</em> = <strong>new_size</strong>(<em>face</em>)<br>
-<em>size</em> = <strong>face:new_size</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_New_Size">FT_New_Size</a>.</span></p>
+<p><em>size</em> = <strong>new_size</strong>(<a href="#face"><em>face</em></a>)<br>
+<span class="small">Also available as <em>face:new_size(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_New_Size">FT_New_Size</a>.</span></p>
 </li>
 <li>
 <p><strong>done_size</strong>(<em>size</em>)<br>
-<strong>size:done</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_Done_Size">FT_Done_Size</a>.</span></p>
+<span class="small">Also available as <em>size:done(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_Done_Size">FT_Done_Size</a>.</span></p>
 </li>
 <li>
 <p><strong>activate_size</strong>(<em>size</em>)<br>
-<strong>size:activate</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_Activate_Size">FT_Activate_Size</a>.</span></p>
+<span class="small">Also available as <em>size:activate(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-sizes_management.html#FT_Activate_Size">FT_Activate_Size</a>.</span></p>
 </li>
 </ul>
 </div>
@@ -1344,7 +1340,7 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_manage
 <div class="ulist">
 <ul>
 <li>
-<p><em>string</em> = <strong>get_font_format</strong>(<em>face</em>)<br>
+<p><em>string</em> = <strong>get_font_format</strong>(<a href="#face"><em>face</em></a>)<br>
 <span class="small">May return <em>nil</em>.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-font_formats.html#FT_Get_Font_Format">FT_Get_Font_Format</a>.</span></p>
 </li>
@@ -1404,83 +1400,83 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-font_formats
 <div class="ulist">
 <ul>
 <li>
-<p><em>outline</em> = <strong>outline_new</strong>(<em>library</em>, <em>maxpoints</em>, <em>maxcontours</em>)<br>
-<em>outline</em> = <strong>library:outline_new</strong>(<em>maxpoints</em>, <em>maxcontours</em>)<br>
+<p><em>outline</em> = <strong>outline_new</strong>(<a href="#library"><em>library</em></a>, <em>maxpoints</em>, <em>maxcontours</em>)<br>
 <span class="small">Returns an handle to a new outline object.<br>
+Also available as <em>library:outline_new(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_New">FT_Outline_New</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_done</strong>(<em>outline</em>)<br>
-<strong>outline:done</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Done">FT_Outline_Done</a>.</span></p>
+<span class="small">Also available as <em>outline:done(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Done">FT_Outline_Done</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_copy</strong>(<em>srcoutline</em>, <em>dstoutline</em>)<br>
-<strong>outline:copy</strong>(<em>dstoutline</em>)<br>
 <span class="small">Source and destination outline must belong to the same library.<br>
+Also available as <em>outline:copy(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Copy">FT_Outline_Copy</a>.</span></p>
 </li>
 <li>
 <p><em>boolean</em>, <em>errmsg</em> = <strong>outline_check</strong>(<em>outline</em>)<br>
-<em>boolean</em>, <em>errmsg</em> = <strong>outline:check</strong>( )<br>
 <span class="small">Returns <em>true</em> on success, or <em>false</em> followed by an error message on failure.<br>
+Also available as <em>outline:check(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Check">FT_Outline_Check</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_translate</strong>(<em>outline</em>, <em>xoffset</em>, <em>yoffset</em>)<br>
-<strong>outline:translate</strong>(<em>xoffset</em>, <em>yoffset</em>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Translate">FT_Outline_Translate</a>.</span></p>
+<span class="small">Also available as <em>outline:translate(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Translate">FT_Outline_Translate</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_transform</strong>(<em>outline</em>, <a href="#matrix"><em>matrix</em></a>)<br>
-<strong>outline:transform</strong>(<a href="#matrix"><em>matrix</em></a>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Transform">FT_Outline_Transform</a>.</span></p>
+<span class="small">Also available as <em>outline:transform(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Transform">FT_Outline_Transform</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_embolden</strong>(<em>outline</em>, <em>strength</em>)<br>
-<strong>outline:embolden</strong>(<em>strength</em>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Embolden">FT_Outline_Embolden</a>.</span></p>
+<span class="small">Also available as <em>outline:embolden(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Embolden">FT_Outline_Embolden</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_emboldenxy</strong>(<em>outline</em>, <em>xstrength</em>, <em>ystrength</em>)<br>
-<strong>outline:emboldenxy</strong>(<em>xstrength</em>, <em>ystrength</em>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_EmboldenXY">FT_Outline_EmboldenXY</a>.</span></p>
+<span class="small">Also available as <em>outline:emboldenxy(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_EmboldenXY">FT_Outline_EmboldenXY</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_reverse</strong>(<em>outline</em>)<br>
-<strong>outline:reverse</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Reverse">FT_Outline_Reverse</a>.</span></p>
+<span class="small">Also available as <em>outline:reverse(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Reverse">FT_Outline_Reverse</a>.</span></p>
 </li>
 <li>
 <p><a href="#bbox"><em>bbox</em></a> = <strong>outline_get_bbox</strong>(<em>outline</em>)<br>
-<a href="#bbox"><em>bbox</em></a> = <strong>outline:get_bbox</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_BBox">FT_Outline_Get_BBox</a>.</span></p>
+<span class="small">Also available as <em>outline:get_bbox(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_BBox">FT_Outline_Get_BBox</a>.</span></p>
 </li>
 <li>
 <p><a href="#bbox"><em>cbox</em></a> = <strong>outline_get_cbox</strong>(<em>outline</em>)<br>
-<a href="#bbox"><em>cbox</em></a> = <strong>outline:get_cbox</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_CBox">FT_Outline_Get_CBox</a>.</span></p>
+<span class="small">Also available as <em>outline:get_cbox(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_CBox">FT_Outline_Get_CBox</a>.</span></p>
 </li>
 <li>
 <p><strong>outline_get_bitmap</strong>(<em>outline</em>, <a href="#bitmap"><em>dstbitmap</em></a>)<br>
-<strong>outline:get_bitmap</strong>(<a href="#bitmap"><em>dstbitmap</em></a>)<br>
 <span class="small">The destination bitmap must belong to the same library as the outline.<br>
+Also available as <em>outline:get_bitmap(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Bitmap">FT_Outline_Get_Bitmap</a>.</span></p>
 </li>
 <li>
 <p><a href="#orientation"><em>orientation</em></a> = <strong>outline_get_orientation</strong>(<em>outline</em>)<br>
-<a href="#orientation"><em>orientation</em></a> = <strong>outline:get_orientation</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Orientation">FT_Outline_Get_Orientation</a>.</span></p>
+<span class="small">Also available as <em>outline:get_orientation(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Orientation">FT_Outline_Get_Orientation</a>.</span></p>
 </li>
 <li>
 <p><a href="#border"><em>border</em></a> = <strong>outline_getinsideborder</strong>(<em>outline</em>)<br>
-<a href="#border"><em>border</em></a> = <strong>outline:getinsideborder</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetInsideBorder">FT_Outline_GetInsideBorder</a>.</span></p>
+<span class="small">Also available as <em>outline:getinsideborder(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetInsideBorder">FT_Outline_GetInsideBorder</a>.</span></p>
 </li>
 <li>
 <p><a href="#border"><em>border</em></a> = <strong>outline_getoutsideborder</strong>(<em>outline</em>)<br>
-<a href="#border"><em>border</em></a> = <strong>outline:getoutsideborder</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetOutsideBorder">FT_Outline_GetOutsideBorder</a>.</span></p>
+<span class="small">Also available as <em>outline:getoutsideborder(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetOutsideBorder">FT_Outline_GetOutsideBorder</a>.</span></p>
 </li>
 </ul>
 </div>
@@ -1493,11 +1489,11 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_proc
 <div class="ulist">
 <ul>
 <li>
-<p><em>advance</em> = <strong>get_advance</strong>(<em>face</em>, <em>glyphindex</em>, <a href="#loadflags"><em>loadflags</em></a>)<br>
+<p><em>advance</em> = <strong>get_advance</strong>(<a href="#face"><em>face</em></a>, <em>glyphindex</em>, <a href="#loadflags"><em>loadflags</em></a>)<br>
 <span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-quick_advance.html#FT_Get_Advance">FT_Get_Advance</a>.</span></p>
 </li>
 <li>
-<p><em>advancelist</em> = <strong>get_advances</strong>(<em>face</em>, <em>glyphindex</em>, <em>count</em> <a href="#loadflags"><em>loadflags</em></a>)<br>
+<p><em>advancelist</em> = <strong>get_advances</strong>(<a href="#face"><em>face</em></a>, <em>glyphindex</em>, <em>count</em>, <a href="#loadflags"><em>loadflags</em></a>)<br>
 <span class="small">Returns a list of advance values (integers)<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-quick_advance.html#FT_Get_Advances">FT_Get_Advances</a>.</span></p>
 </li>
@@ -1512,35 +1508,35 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-quick_advanc
 <div class="ulist">
 <ul>
 <li>
-<p><em>bitmap</em> = <strong>new_bitmap</strong>(<em>library</em>)<br>
-<em>bitmap</em> = <strong>library:new_bitmap</strong>( )<br>
+<p><em>bitmap</em> = <strong>new_bitmap</strong>(<a href="#library"><em>library</em></a>)<br>
 <span class="small">Returns an handle to a new bitmap object.<br>
+Also available as <em>library:new_bitmap(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Init">FT_Bitmap_Init</a>.</span></p>
 </li>
 <li>
 <p><strong>done_bitmap</strong>(<em>bitmap</em>)<br>
-<strong>bitmap:done</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Done">FT_Bitmap_Done</a>.</span></p>
+<span class="small">Also available as <em>bitmap:done(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Done">FT_Bitmap_Done</a>.</span></p>
 </li>
 <li>
 <p><strong>bitmap_copy</strong>(<em>srcbitmap</em>, <em>dstbitmap</em>)<br>
-<strong>bitmap:copy</strong>(<em>dstbitmap</em>)<br>
 <span class="small">Source and destination bitmap must belong to the same library.<br>
+Also available as <em>srcbitmap:copy(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Copy">FT_Bitmap_Copy</a>.</span></p>
 </li>
 <li>
 <p><strong>bitmap_convert</strong>(<em>srcbitmap</em>, <em>dstbitmap</em>, <em>alignment</em>)<br>
-<strong>bitmap:convert</strong>(<em>dstbitmap</em>, <em>alignment</em>)<br>
 <span class="small">Source and destination bitmap must belong to the same library.<br>
+Also available as <em>srcbitmap:convert(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Convert">FT_Bitmap_Convert</a>.</span></p>
 </li>
 <li>
 <p><strong>bitmap_embolden</strong>(<em>bitmap</em>, <em>xstrength</em>, <em>ystrength</em>)<br>
-<strong>bitmap:embolden</strong>(<em>xstrength</em>, <em>ystrength</em>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Embolden">FT_Bitmap_Embolden</a>.</span></p>
+<span class="small">Also available as <em>bitmap:embolden(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Embolden">FT_Bitmap_Embolden</a>.</span></p>
 </li>
 <li>
-<p><a href="#bitmapdata"><em>bitmapdata</em></a> = <strong>bitmap:data</strong>([<em>left</em> , <em>top</em>])<br>
+<p><a href="#bitmapdata"><em>bitmapdata</em></a> = bitmap<strong>:data</strong>([<em>left</em> , <em>top</em>])<br>
 <span class="small">Use this to retrieve the bitmap contents.<br>
 The '<em>left</em>' and '<em>top</em>' parameters are used only to initialize the respective fields of the
 returned <a href="#bitmapdata">bitmapdata</a> table (both default to 0).</span></p>
@@ -1556,82 +1552,82 @@ returned <a href="#bitmapdata">bitmapdata</a> table (both default to 0).</span><
 <div class="ulist">
 <ul>
 <li>
-<p><em>stroker</em> = <strong>stroker_new</strong>(<em>library</em>)<br>
-<em>stroker</em> = <strong>library:stroker_new</strong>( )<br>
+<p><em>stroker</em> = <strong>stroker_new</strong>(<a href="#library"><em>library</em></a>)<br>
 <span class="small">Returns an handle to a new strokerobject.<br>
+Also available as <em>library:stroker_new(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_New">FT_Stroker_New</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_done</strong>(<em>stroker</em>)<br>
-<strong>stroker:done</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Done">FT_Stroker_Done</a>.</span></p>
+<span class="small">Also available as <em>stroker:done(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Done">FT_Stroker_Done</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_beginsubpath</strong>(<em>stroker</em>, <em>to</em>, <em>open</em>)<br>
-<strong>stroker:beginsubpath</strong>(<em>to</em>, <em>open</em>)<br>
 <span class="small">The <em>to</em> parameter is a <a href="#vector"><em>vector</em></a> and the <em>open</em> parameter is a boolean.<br>
+Also available as <em>stroker:beginsubpath(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_BeginSubPath">FT_Stroker_BeginSubPath</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_endsubpath</strong>(<em>stroker</em>)<br>
-<strong>stroker:endsubpath</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_EndSubPath">FT_Stroker_EndSubPath</a>.</span></p>
+<span class="small">Also available as <em>stroker:endsubpath(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_EndSubPath">FT_Stroker_EndSubPath</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_rewind</strong>(<em>stroker</em>)<br>
-<strong>stroker:rewind</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Rewind">FT_Stroker_Rewind</a>.</span></p>
+<span class="small">Also available as <em>stroker:rewind(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Rewind">FT_Stroker_Rewind</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_set</strong>(<em>stroker</em>, <em>radius</em>, <a href="#linecap"><em>linecap</em></a>, <a href="#linejoin"><em>linejoin</em></a>, <em>miterlimit</em>)<br>
-<strong>stroker:set</strong>(<em>radius</em>, <a href="#linecap"><em>linecap</em></a>, <a href="#linejoin"><em>linejoin</em></a>, <em>miterlimit</em>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Set">FT_Stroker_Set</a>.</span></p>
+<span class="small">Also available as <em>stroker:set(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Set">FT_Stroker_Set</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_conicto</strong>(<em>stroker</em>, <em>control</em>, <em>to</em>)<br>
-<strong>stroker:conicto</strong>(<em>control</em>, <em>to</em>)<br>
 <span class="small">The <em>control</em> and <em>to</em> parameters are <a href="#vector"><em>vectors</em></a>.<br>
+Also available as <em>stroker:conicto(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ConicTo">FT_Stroker_ConicTo</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_cubicto</strong>(<em>stroker</em>, <em>control1</em>, <em>control2</em>, <em>to</em>)<br>
-<strong>stroker:cubicto</strong>(<em>control1</em>, <em>control2</em>, <em>to</em>)<br>
 <span class="small">The <em>control1</em>, <em>control2</em>, and <em>to</em> parameters are <a href="#vector"><em>vectors</em></a>.<br>
+Also available as <em>stroker:cubicto(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_CubicTo">FT_Stroker_CubicTo</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_lineto</strong>(<em>stroker</em>, <em>to</em>)<br>
-<strong>stroker:lineto</strong>(<em>to</em>)<br>
 <span class="small">The <em>to</em> parameter is a <a href="#vector"><em>vector</em></a>.<br>
+Also available as <em>stroker:lineto(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_LineTo">FT_Stroker_LineTo</a>.</span></p>
 </li>
 <li>
 <p><em>numpoints</em>, <em>numcontours</em> = <strong>stroker_getcounts</strong>(<em>stroker</em>)<br>
-<em>numpoints</em>, <em>numcontours</em> = <strong>stroker:getcounts</strong>( )<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetCounts">FT_Stroker_GetCounts</a>.</span></p>
+<span class="small">Also available as <em>stroker:getcounts(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetCounts">FT_Stroker_GetCounts</a>.</span></p>
 </li>
 <li>
 <p><em>numpoints</em>, <em>numcontours</em> = <strong>stroker_getbordercounts</strong>(<em>stroker</em>, <a href="#border"><em>border</em></a>)<br>
-<em>numpoints</em>, <em>numcontours</em> = <strong>stroker:getbordercounts</strong>(<a href="#border"><em>border</em></a>)<br>
-<span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetBorderCounts">FT_Stroker_GetBorderCounts</a>.</span></p>
+<span class="small">Also available as <em>stroker:getbordercounts(&nbsp;)</em> method.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetBorderCounts">FT_Stroker_GetBorderCounts</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_parseoutline</strong>(<em>stroker</em>, <a href="#outline"><em>outline</em></a>, <em>opened</em>)<br>
-<strong>stroker:parseoutline</strong>(<a href="#outline"><em>outline</em></a>, <em>opened</em>)<br>
 <span class="small">The <em>opened</em> parameter is a boolean.<br>
 Stroker and outline must belong to the same library.<br>
+Also available as <em>stroker:parseoutline(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ParseOutline">FT_Stroker_ParseOutline</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_export</strong>(<em>stroker</em>, <a href="#outline"><em>outline</em></a>)<br>
-<strong>stroker:export</strong>(<a href="#outline"><em>outline</em></a>)<br>
 <span class="small">Stroker and outline must belong to the same library.<br>
+Also available as <em>stroker:export(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Export">FT_Stroker_Export</a>.</span></p>
 </li>
 <li>
 <p><strong>stroker_exportborder</strong>(<em>stroker</em>, <a href="#border"><em>border</em></a>, <a href="#outline"><em>outline</em></a>)<br>
-<strong>stroker:exportborder</strong>(<a href="#border"><em>border</em></a>, <a href="#outline"><em>outline</em></a>)<br>
 <span class="small">Stroker and outline must belong to the same library.<br>
+Also available as <em>stroker:exportborder(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ExportBorder">FT_Stroker_ExportBorder</a>.</span></p>
 </li>
 </ul>
@@ -1657,199 +1653,116 @@ passing it the text version of the
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_types">Data types</h2>
+<h2 id="_structs">Structs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Most FreeType data types are represented in MoonFreeType as Lua tables, which are described in this
+<p>Most FreeType structs are represented in MoonFreeType as Lua tables, which are described in this
 section.</p>
 </div>
 <div class="paragraph">
 <p>There is an (almost) one-to-one correspondence between the table fields and the fields
 of the underlying C structs. Refer to the FreeType documentation for their meanings.</p>
 </div>
-<hr>
-<div id="bbox" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_BBox">FT_BBox</a>.</span></p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>bbox</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>xmin</strong>, <strong>ymin</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>xmax</strong>, <strong>ymax</strong>: integers</span><br>
-}</p>
+<p><a id="bbox"></a>
+<span class="small"><strong>bbox</strong> = {<br>
+<em>xmin</em>, <em>ymin</em>: integer,<br>
+<em>xmax</em>, <em>ymax</em>: integer,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_BBox">FT_BBox</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="bitmapdata" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Bitmap">FT_Bitmap</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>bitmapdata</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>rows</strong>, <strong>width</strong>, <strong>pitch</strong>, <strong>left</strong>, <strong>top</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>pixel_mode</strong>: <a href="#pixelmode"><em>pixelmode</em></a>,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>num_grays</strong>: integer (for '<em>gray</em>' pixel mode only),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>buffer</strong>: binary string (#buffer = rows * abs(pitch))</span><br>
-}</p>
+<p><a id="bitmapdata"></a>
+<span class="small"><strong>bitmapdata</strong> = {<br>
+<em>rows</em>, <em>width</em>, <em>pitch</em>, <em>left</em>, <em>top</em>: integer,<br>
+<em>pixel_mode</em>: <a href="#pixelmode">pixelmode</a>,<br>
+<em>num_grays</em>: integer (for '<em>gray</em>' pixel mode only),<br>
+<em>buffer</em>: binary string (#buffer = rows * abs(pitch)),<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Bitmap">FT_Bitmap</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="bitmapsize" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Bitmap_Size">FT_Bitmap_Size</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>bitmapsize</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>height</strong>, <strong>width</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>size</strong>: integer,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>x_ppem</strong>, <strong>y_ppem</strong>: integers</span><br>
-}</p>
+<p><a id="bitmapsize"></a>
+<span class="small"><strong>bitmapsize</strong> = {<br>
+<em>height</em>, <em>width</em>: integer,<br>
+<em>size</em>: integer,<br>
+<em>x_ppem</em>, <em>y_ppem</em>: integer,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Bitmap_Size">FT_Bitmap_Size</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="charmap" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_CharMapRec">FT_CharMapRec</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>charmap</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>encoding</strong>: <a href="#encoding"><em>encoding</em></a>,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>platform_id</strong>, <strong>encoding_id</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>platform_name</strong>, <strong>encoding_name</strong>: strings (text versions of ids, may be <em>nil</em>)</span><br>
-}</p>
+<p><a id="charmap"></a>
+<span class="small"><strong>charmap</strong> = {<br>
+<em>encoding</em>: <a href="#encoding">encoding</a>,<br>
+<em>platform_id</em>, <em>encoding_id</em>: integer,<br>
+<em>platform_name</em>, <em>encoding_name</em>: string (text version of id, may be <em>nil</em>),<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_CharMapRec">FT_CharMapRec</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="glyphdata" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_GlyphSlot">FT_GlyphSlot</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>glyphdata</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>metrics</strong>: <a href="#glyphmetrics"><em>glyphmetrics</em></a>,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>linear_hori_advance</strong>, <strong>linear_vert_advance</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>advance</strong>: <a href="#matrix"><em>matrix</em></a>,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>format</strong>: <a href="#glyphformat"><em>glyphformat</em></a>,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>bitmap</strong>: <a href="#bitmapdata"><em>bitmapdata</em></a> (for '<em>bitmap</em>' format  only),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>outline</strong>: <a href="#outlinedata"><em>outlinedata</em> </a> (for '<em>outline</em>' and '<em>plotter</em>' formats only),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>subglyphs</strong>: array of <a href="#subglyph"><em>subglyph</em> </a> (for '<em>composite</em>' format  only),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>control_data</strong>: binary string (optional),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>lsb_delta</strong>, <strong>rsb_delta</strong>: integers</span><br>
-}</p>
+<p><a id="glyphdata"></a>
+<span class="small"><strong>glyphdata</strong> = {<br>
+<em>metrics</em>: <a href="#glyphmetrics">glyphmetrics</a>,<br>
+<em>linear_hori_advance</em>: integer,<br>
+<em>linear_vert_advance</em>: integer,<br>
+<em>advance</em>: <a href="#matrix">matrix</a>,<br>
+<em>format</em>: <a href="#glyphformat">glyphformat</a>,<br>
+<em>bitmap</em>: <a href="#bitmapdata">bitmapdata</a> (for '<em>bitmap</em>' format  only),<br>
+<em>outline</em>: <a href="#outlinedata">outlinedata</a> (for '<em>outline</em>' and '<em>plotter</em>' formats only),<br>
+<em>subglyphs</em>: {<a href="#subglyph">subglyph</a>} (for '<em>composite</em>' format  only),<br>
+<em>control_data</em>: binary string (optional),<br>
+<em>lsb_delta</em>, <em>rsb_delta</em>: integer,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_GlyphSlot">FT_GlyphSlot</a>)<br>
+Note: The fields <em>bitmap_left</em>, and <em>bitmap_top</em> are moved in the <a href="#bitmapdata">bitmapdata</a> table (as <em>bitmap.left</em> and <em>bitmap.top</em>, respectively).</span></p>
 </li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The fields <strong>bitmap_left</strong>, and <strong>bitmap_top</strong> are moved in the <a href="#bitmapdata">bitmapdata</a> table (as <strong>bitmap.left</strong> and <strong>bitmap.top</strong>, respectively).
-</td>
-</tr>
-</table>
-</div>
-<hr>
-<div id="glyphmetrics" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Glyph_Metrics">FT_Glyph_Metrics</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>glyphmetrics</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>width</strong>, <strong>height</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>hori_bearing_x</strong>, <strong>hori_bearing_y</strong>, <strong>hori_advance</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>vert_bearing_x</strong>, <strong>vert_bearing_y</strong>, <strong>vert_advance</strong>: integers</span><br>
-}</p>
+<p><a id="glyphmetrics"></a>
+<span class="small"><strong>glyphmetrics</strong> = {<br>
+<em>width</em>, <em>height</em>: integer,<br>
+<em>hori_bearing_x</em>, <em>hori_bearing_y</em>, <em>hori_advance</em>: integer,<br>
+<em>vert_bearing_x</em>, <em>vert_bearing_y</em>, <em>vert_advance</em>: integer,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Glyph_Metrics">FT_Glyph_Metrics</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="matrix" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Matrix">FT_Matrix</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>matrix</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>xx</strong>, <strong>xy</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>yx</strong>, <strong>yy</strong>: integers</span><br>
-}</p>
+<p><a id="matrix"></a>
+<span class="small"><strong>matrix</strong> = {<br>
+<em>xx</em>, <em>xy</em>: integer,<br>
+<em>yx</em>, <em>yy</em>: integer,<br>
+}(rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Matrix">FT_Matrix</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="outlinedata" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline">FT_Outline</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>outlinedata</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>points</strong>: array of <a href="#vector"><em>vector</em></a>,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>tags</strong>: array of integer codes (#tags = #points),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>type</strong>: array of <a href="#pointtype"><em>pointtype</em></a> (#type = #points),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>scanmode</strong>: array of <a href="#scanmode"><em>scanmode</em></a> (#scanmode = #points),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>contours</strong>: array of integers (indices in points array, 1-based),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>flags</strong>: <a href="#outlineflags"><em>outlineflags</em></a> (integer code)</span><br>
-}</p>
+<p><a id="outlinedata"></a>
+<span class="small"><strong>outlinedata</strong> = {<br>
+<em>points</em>: {<a href="#vector">vector</a>},<br>
+<em>tags</em>: {integer} (#tags = #points),<br>
+<em>type</em>: {<a href="#pointtype">pointtype</a>} (#type = #points),<br>
+<em>scanmode</em>: {<a href="#scanmode">scanmode</a>} (#scanmode = #points),<br>
+<em>contours</em>: {integer} (indices in points array, 1-based),<br>
+<em>flags</em>: <a href="#outlineflags">outlineflags</a> (integer code),<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline">FT_Outline</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="sizemetrics" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_Metrics">FT_Size_Metrics</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>sizemetrics</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>x_ppem</strong>, <strong>y_ppem</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>y_scale</strong>, <strong>y_scale</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>ascender</strong>, <strong>descender</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>height</strong>: integer,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>max_advance</strong>: integer</span><br>
-}</p>
+<p><a id="sizemetrics"></a>
+<span class="small"><strong>sizemetrics</strong> = {<br>
+<em>x_ppem</em>, <em>y_ppem</em>: integer,<br>
+<em>y_scale</em>, <em>y_scale</em>: integer,<br>
+<em>ascender</em>, <em>descender</em>: integer,<br>
+<em>height</em>: integer,<br>
+<em>max_advance</em>: integer,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_Metrics">FT_Size_Metrics</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="subglyph" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_SubGlyph_Info">FT_Get_SubGlyph_Info</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>subglyph</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>index</strong>: integer (glyph index, 1-based),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>flags</strong>: <a href="#subglyphflags"><em>subglyphflags</em></a> (integer code),<br>
-&#8192;&#8192;&#8192;&#8192; <strong>arg1</strong>, <strong>arg2</strong>: integers,<br>
-&#8192;&#8192;&#8192;&#8192; <strong>transform</strong>: <a href="#matrix"><em>matrix</em></a></span><br>
-}</p>
+<p><a id="subglyph"></a>
+<span class="small"><strong>subglyph</strong> = {<br>
+<em>index</em>: integer (glyph index, 1-based),<br>
+<em>flags</em>: <a href="#subglyphflags">subglyphflags</a> (integer code),<br>
+<em>arg1</em>, <em>arg2</em>: integer,<br>
+<em>transform</em>: <a href="#matrix">matrix</a>,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Get_SubGlyph_Info">FT_Get_SubGlyph_Info</a>)</span></p>
 </li>
-</ul>
-</div>
-<hr>
-<div id="vector" class="paragraph">
-<p><span class="small">Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Vector">FT_Vector</a>.</span></p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p><strong>vector</strong> = {<br>
-<span class="small">&#8192;&#8192;&#8192;&#8192; <strong>x</strong>, <strong>y</strong>: integers</span><br>
-}</p>
+<p><a id="vector"></a>
+<span class="small"><strong>vector</strong> = {<br>
+<em>x</em>, <em>y</em>: integer,<br>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Vector">FT_Vector</a>)</span></p>
 </li>
 </ul>
 </div>

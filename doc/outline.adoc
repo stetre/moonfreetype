@@ -4,83 +4,68 @@
 
 [small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#++[Outline Processing].#
 
-
-* _outline_ = *outline_new*(_library_, _maxpoints_, _maxcontours_) +
-_outline_ = *library:outline_new*(_maxpoints_, _maxcontours_) +
+* _outline_ = *outline_new*(<<library, _library_>>, _maxpoints_, _maxcontours_) +
 [small]#Returns an handle to a new outline object. +
+Also available as _library:outline_new(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_New++[FT_Outline_New].#
 
 * *outline_done*(_outline_) +
-*outline:done*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Done++[FT_Outline_Done].#
+[small]#Also available as _outline:done(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Done++[FT_Outline_Done].#
 
 * *outline_copy*(_srcoutline_, _dstoutline_) +
-*outline:copy*(_dstoutline_) +
 [small]#Source and destination outline must belong to the same library. +
+Also available as _outline:copy(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Copy++[FT_Outline_Copy].#
 
 * _boolean_, _errmsg_ = *outline_check*(_outline_) +
-_boolean_, _errmsg_ = *outline:check*( ) +
 [small]#Returns _true_ on success, or _false_ followed by an error message on failure. +
+Also available as _outline:check(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Check++[FT_Outline_Check].#
 
 * *outline_translate*(_outline_, _xoffset_, _yoffset_) +
-*outline:translate*(_xoffset_, _yoffset_) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Translate++[FT_Outline_Translate].#
-
+[small]#Also available as _outline:translate(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Translate++[FT_Outline_Translate].#
 
 * *outline_transform*(_outline_, <<matrix, _matrix_>>) +
-*outline:transform*(<<matrix, _matrix_>>) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Transform++[FT_Outline_Transform].#
-
+[small]#Also available as _outline:transform(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Transform++[FT_Outline_Transform].#
 
 * *outline_embolden*(_outline_, _strength_) +
-*outline:embolden*(_strength_) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Embolden++[FT_Outline_Embolden].#
+[small]#Also available as _outline:embolden(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Embolden++[FT_Outline_Embolden].#
 
 * *outline_emboldenxy*(_outline_, _xstrength_, _ystrength_) +
-*outline:emboldenxy*(_xstrength_, _ystrength_) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_EmboldenXY++[FT_Outline_EmboldenXY].#
-
+[small]#Also available as _outline:emboldenxy(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_EmboldenXY++[FT_Outline_EmboldenXY].#
 
 * *outline_reverse*(_outline_) +
-*outline:reverse*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Reverse++[FT_Outline_Reverse].#
+[small]#Also available as _outline:reverse(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Reverse++[FT_Outline_Reverse].#
 
 * <<bbox, _bbox_>> = *outline_get_bbox*(_outline_) +
-<<bbox, _bbox_>> = *outline:get_bbox*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_BBox++[FT_Outline_Get_BBox].#
+[small]#Also available as _outline:get_bbox(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_BBox++[FT_Outline_Get_BBox].#
 
 * <<bbox, _cbox_>> = *outline_get_cbox*(_outline_) +
-<<bbox, _cbox_>> = *outline:get_cbox*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_CBox++[FT_Outline_Get_CBox].#
+[small]#Also available as _outline:get_cbox(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_CBox++[FT_Outline_Get_CBox].#
 
 * *outline_get_bitmap*(_outline_, <<bitmap, _dstbitmap_>>) +
-*outline:get_bitmap*(<<bitmap, _dstbitmap_>>) +
 [small]#The destination bitmap must belong to the same library as the outline. +
+Also available as _outline:get_bitmap(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Bitmap++[FT_Outline_Get_Bitmap].#
 
 * <<orientation, _orientation_>> = *outline_get_orientation*(_outline_) +
-<<orientation, _orientation_>> = *outline:get_orientation*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Orientation++[FT_Outline_Get_Orientation].#
+[small]#Also available as _outline:get_orientation(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Orientation++[FT_Outline_Get_Orientation].#
 
 * <<border, _border_>> = *outline_getinsideborder*(_outline_) +
-<<border, _border_>> = *outline:getinsideborder*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetInsideBorder++[FT_Outline_GetInsideBorder].#
+[small]#Also available as _outline:getinsideborder(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetInsideBorder++[FT_Outline_GetInsideBorder].#
 
 * <<border, _border_>> = *outline_getoutsideborder*(_outline_) +
-<<border, _border_>> = *outline:getoutsideborder*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetOutsideBorder++[FT_Outline_GetOutsideBorder].#
-
-
-////
-* <<, __>> = *outline:*( ) +
-
-scaffolding 4yy
-* *outline_*(_outline_) +
-*outline:*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_++[FT_].#
-
-////
+[small]#Also available as _outline:getoutsideborder(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetOutsideBorder++[FT_Outline_GetOutsideBorder].#
 
 

@@ -3,17 +3,17 @@
 === The _face_ object
 
 [[new_face]]
-* _face_ = *new_face*(_library_, _filename_ [, _index_, _instance_]) +
-_face_ = *library:new_face*(_filename_ [, _index_, _instance_]) +
+* _face_ = *new_face*(<<library, _library_>>, _filename_ [, _index_, _instance_]) +
 [small]#Creates a new face. +
 _filename_: the path to the font file (a string). +
 _index_: the index of the face in the font file (0-based, defaults to 0). +
 _instance_: named instance index (defaults to 0) +
+Also available as _library:new_face(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_New_Face++[FT_New_Face].#
 
 * *done_face*(_face_) +
-*face:done*( ) +
 [small]#Deletes the given _face_. +
+Also available as _face:done(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Done_Face++[FT_Done_Face].#
 
 NOTE: All MoonFreeType functions having a _face_ object as first parameter are

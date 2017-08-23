@@ -1,80 +1,78 @@
 
 '''
 
-The following methods can be used to access the properties of a _face_ object (that is, the fields of the underlying FT_FaceRec struct). +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FaceRec++[FT_FaceRec].#
+The following methods can be used to access the properties of a _face_ object, that is, the fields of the underlying
+link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FaceRec++[FT_FaceRec] struct.
 
-* _n_ = *face:num_faces*( ) +
+* _n_ = pass:[face]*:num_faces*( ) +
 
-* _index_, _instance_ = *face:face_index*( ) +
+* _index_, _instance_ = pass:[face]*:face_index*( ) +
 [small]#Returns the _index_ of the face in the font file (0-based) and the 
 named _instance_ index.#
 
-* _boolean_ = *face:has_horizontal*( ) +
-_boolean_ = *face:has_vertical*( ) +
-_boolean_ = *face:has_kerning*( ) +
-_boolean_ = *face:is_scalable*( ) +
-_boolean_ = *face:is_sfnt*( ) +
-_boolean_ = *face:is_fixed_width*( ) +
-_boolean_ = *face:has_fixed_sizes*( ) +
-_boolean_ = *face:has_fast_glyphs*( ) +
-_boolean_ = *face:has_glyph_names*( ) +
-_boolean_ = *face:has_multiple_masters*( ) +
-_boolean_ = *face:is_cid_keyed*( ) +
-_boolean_ = *face:is_tricky*( ) +
-_boolean_ = *face:has_color*( ) +
+* _boolean_ = pass:[face]*:has_horizontal*( ) +
+_boolean_ = pass:[face]*:has_vertical*( ) +
+_boolean_ = pass:[face]*:has_kerning*( ) +
+_boolean_ = pass:[face]*:is_scalable*( ) +
+_boolean_ = pass:[face]*:is_sfnt*( ) +
+_boolean_ = pass:[face]*:is_fixed_width*( ) +
+_boolean_ = pass:[face]*:has_fixed_sizes*( ) +
+_boolean_ = pass:[face]*:has_fast_glyphs*( ) +
+_boolean_ = pass:[face]*:has_glyph_names*( ) +
+_boolean_ = pass:[face]*:has_multiple_masters*( ) +
+_boolean_ = pass:[face]*:is_cid_keyed*( ) +
+_boolean_ = pass:[face]*:is_tricky*( ) +
+_boolean_ = pass:[face]*:has_color*( ) +
 [small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FACE_FLAG_XXX++[FT_FACE_FLAG_XXX].#
 
-* _boolean_ = *face:is_italic*( ) +
-_boolean_ = *face:is_bold*( ) +
+* _boolean_ = pass:[face]*:is_italic*( ) +
+_boolean_ = pass:[face]*:is_bold*( ) +
 [small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_STYLE_FLAG_XXX++[FT_STYLE_FLAG_XXX].#
 
-* _n_ = *face:num_glyphs*( ) +
+* _n_ = pass:[face]*:num_glyphs*( ) +
 
-* _string_ = *face:family_name*( ) +
-_string_ = *face:style_name*( ) +
+* _string_ = pass:[face]*:family_name*( ) +
+_string_ = pass:[face]*:style_name*( ) +
 [small]#May return _nil_ (these fields are optional).# 
 
 
-* _n_ = *face:num_fixed_sizes*( ) +
-_list_ = *face:available_sizes*( ) +
-[small]#Returns a list of <<bitmapsize, _bitmapsize_>> elements, indexed from 1 to _num_fixed_sizes_ (inclusive). +
-Returns _nil_ if _num_fixed_sizes_ is 0.#
+* _n_ = pass:[face]*:num_fixed_sizes*( ) +
+{<<bitmapsize, _bitmapsize_>>} = pass:[face]*:available_sizes*( ) +
+[small]#Returns _nil_ if _num_fixed_sizes_ is 0, otherwise returns a table with _num_fixed_sizes_ elements.#
 
 
-* _n_ = *face:num_charmaps*( ) +
-_list_ = *face:charmaps*( ) +
-[small]#Returns a list of <<charmap, _charmap_>> elements, indexed from 1 to _num_charmaps_ (inclusive). +
-Returns _nil_ if _num_charmaps_ is 0.#
+* _n_ = pass:[face]*:num_charmaps*( ) +
+[<<charmap, _charmap_>>} = pass:[face]*:charmaps*( ) +
+[small]#Returns _nil_ if _num__charmaps_ is 0, otherwise returns a table with _num_charmaps_ elements.#
 
-* <<bbox, _bbox_>> = *face:bbox*( ) +
-n = *face:units_per_em*( ) +
-n = *face:ascender*( ) +
-n = *face:descender*( ) +
-n = *face:height*( ) +
-n = *face:max_advance_width*( ) +
-n = *face:max_advance_height*( ) +
-n = *face:underline_position*( ) +
-n = *face:underline_thickness*( ) +
+* <<bbox, _bbox_>> = pass:[face]*:bbox*( ) +
+n = pass:[face]*:units_per_em*( ) +
+n = pass:[face]*:ascender*( ) +
+n = pass:[face]*:descender*( ) +
+n = pass:[face]*:height*( ) +
+n = pass:[face]*:max_advance_width*( ) +
+n = pass:[face]*:max_advance_height*( ) +
+n = pass:[face]*:underline_position*( ) +
+n = pass:[face]*:underline_thickness*( ) +
 [small]#These are relevant only to scalable outlines (see link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FaceRec++[FT_FaceRec]).#
 
 
-* <<glyphdata, _glyphdata_>> = *face:glyph*( ) +
+* <<glyphdata, _glyphdata_>> = pass:[face]*:glyph*( ) +
 [small]#Returns the data for the current glyph, i.e. the last loaded in the face's glyph slot with a
 <<load_char, load_char>>(&nbsp;) or <<load_glyph, load_glyph>>(&nbsp;) call.#
 
-* <<bitmap, _bitmap_>>, _left_, _top_ = *face:glyph_bitmap*( ) +
+* <<bitmap, _bitmap_>>, _left_, _top_ = pass:[face]*:glyph_bitmap*( ) +
 [small]#Returns an handle to the bitmap object and the left and top bearing for the current glyph. +
 Returns _nil_ if the glyph format is not '_bitmap_'.#
 
-* <<outline, _outline_>> = *face:glyph_outline*( ) +
+* <<outline, _outline_>> = pass:[face]*:glyph_outline*( ) +
 [small]#Returns an handle to the outline object for the current glyph. +
 Returns _nil_ if the glyph format is not '_outline_'.#
 
-* <<sizemetrics, _sizemetrics_>> = *face:size*( ) +
+* <<sizemetrics, _sizemetrics_>> = pass:[face]*:size*( ) +
 [small]#Returns the metrics for the current active size for this face.#
 
-* <<charmap, _charmap_>> = *face:charmap*( ) +
+* <<charmap, _charmap_>> = pass:[face]*:charmap*( ) +
 [small]#Returns the current active <<charmap, _charmap_>> for this face.#
 
 

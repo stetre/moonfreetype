@@ -4,31 +4,30 @@
 
 [small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#++[Bitmap Handling].#
 
-* _bitmap_ = *new_bitmap*(_library_) +
-_bitmap_ = *library:new_bitmap*( ) +
+* _bitmap_ = *new_bitmap*(<<library, _library_>>) +
 [small]#Returns an handle to a new bitmap object. +
+Also available as _library:new_bitmap(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Init++[FT_Bitmap_Init].#
 
 * *done_bitmap*(_bitmap_) +
-*bitmap:done*( ) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Done++[FT_Bitmap_Done].#
+[small]#Also available as _bitmap:done(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Done++[FT_Bitmap_Done].#
 
 * *bitmap_copy*(_srcbitmap_, _dstbitmap_) +
-*bitmap:copy*(_dstbitmap_) +
 [small]#Source and destination bitmap must belong to the same library. +
+Also available as _srcbitmap:copy(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Copy++[FT_Bitmap_Copy].#
 
 * *bitmap_convert*(_srcbitmap_, _dstbitmap_, _alignment_) +
-*bitmap:convert*(_dstbitmap_, _alignment_) +
 [small]#Source and destination bitmap must belong to the same library. +
+Also available as _srcbitmap:convert(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Convert++[FT_Bitmap_Convert].#
 
-
 * *bitmap_embolden*(_bitmap_, _xstrength_, _ystrength_) +
-*bitmap:embolden*(_xstrength_, _ystrength_) +
-[small]#Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Embolden++[FT_Bitmap_Embolden].#
+[small]#Also available as _bitmap:embolden(&nbsp;)_ method. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-bitmap_handling.html#FT_Bitmap_Embolden++[FT_Bitmap_Embolden].#
 
-* <<bitmapdata, _bitmapdata_>> = *bitmap:data*([_left_ , _top_]) +
+* <<bitmapdata, _bitmapdata_>> = pass:[bitmap]*:data*([_left_ , _top_]) +
 [small]#Use this to retrieve the bitmap contents. +
 The '_left_' and '_top_' parameters are used only to initialize the respective fields of the 
 returned <<bitmapdata, bitmapdata>> table (both default to 0).#
