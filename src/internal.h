@@ -37,6 +37,16 @@
 #include FT_MODULE_H
 #include FT_GLYPH_H
 #include FT_STROKER_H
+
+#define MAKE_VERSION(major, minor, patch) (((major) << 22) | ((minor) << 12) | (patch))
+#define FTVERSION MAKE_VERSION(FREETYPE_MAJOR, FREETYPE_MINOR, FREETYPE_PATCH)
+
+#define AT_LEAST_VERSION(x, y, z)  (FTVERSION >= MAKE_VERSION((x), (y), (z)))
+
+#if !AT_LEAST_VERSION(2,6,1)
+#error("MoonFreeType requires FreeType >= 2.6.1")
+#endif
+
 #include "tree.h"
 #include "udata.h"
 #include "enums.h"
