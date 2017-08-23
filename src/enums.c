@@ -25,422 +25,395 @@
 
 #include "internal.h"
 
+/*------------------------------------------------------------------------------*
+ | Code<->string map for enumerations                                           |
+ *------------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------*
- | FT_Orientation                                                       |
- *----------------------------------------------------------------------*/
 
-unsigned int checkorientation(lua_State *L, int arg)
+/* code <-> string record */
+#define rec_t struct rec_s
+struct rec_s {
+    RB_ENTRY(rec_s) CodeEntry;
+    RB_ENTRY(rec_s) StringEntry;
+    uint32_t domain;
+    uint32_t code;  /* (domain, code) = search key in code tree */
+    char     *str;  /* (domain, str) = search key in string tree */
+};
+
+/* compare functions */
+static int cmp_code(rec_t *rec1, rec_t *rec2)
     {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_ORIENTATION_FILL_RIGHT, "fill right"); /* FT_ORIENTATION_TRUETYPE */
-        CASE(FT_ORIENTATION_FILL_LEFT, "fill left"); /* FT_ORIENTATION_POSTSCRIPT */
-        CASE(FT_ORIENTATION_NONE, "none");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
+    if(rec1->domain != rec2->domain)
+        return (rec1->domain < rec2->domain ? -1 : rec1->domain > rec2->domain);
+    return (rec1->code < rec2->code ? -1 : rec1->code > rec2->code);
     }
 
-int pushorientation(lua_State *L, unsigned int value)
+static int cmp_str(rec_t *rec1, rec_t *rec2)
     {
-    switch(value)
+    if(rec1->domain != rec2->domain)
+        return (rec1->domain < rec2->domain ? -1 : rec1->domain > rec2->domain);
+    return strcmp(rec1->str, rec2->str);
+    }
+
+static RB_HEAD(CodeTree, rec_s) CodeHead = RB_INITIALIZER(&CodeHead);
+RB_PROTOTYPE_STATIC(CodeTree, rec_s, CodeEntry, cmp_code)
+RB_GENERATE_STATIC(CodeTree, rec_s, CodeEntry, cmp_code)
+
+static RB_HEAD(StringTree, rec_s) StringHead = RB_INITIALIZER(&StringHead);
+RB_PROTOTYPE_STATIC(StringTree, rec_s, StringEntry, cmp_str)
+RB_GENERATE_STATIC(StringTree, rec_s, StringEntry, cmp_str)
+
+static rec_t *code_remove(rec_t *rec)
+    { return RB_REMOVE(CodeTree, &CodeHead, rec); }
+static rec_t *code_insert(rec_t *rec)
+    { return RB_INSERT(CodeTree, &CodeHead, rec); }
+static rec_t *code_search(uint32_t domain, uint32_t code)
+    { rec_t tmp; tmp.domain = domain; tmp.code = code; return RB_FIND(CodeTree, &CodeHead, &tmp); }
+static rec_t *code_first(uint32_t domain, uint32_t code)
+    { rec_t tmp; tmp.domain = domain; tmp.code = code; return RB_NFIND(CodeTree, &CodeHead, &tmp); }
+static rec_t *code_next(rec_t *rec)
+    { return RB_NEXT(CodeTree, &CodeHead, rec); }
+#if 0
+static rec_t *code_prev(rec_t *rec)
+    { return RB_PREV(CodeTree, &CodeHead, rec); }
+static rec_t *code_min(void)
+    { return RB_MIN(CodeTree, &CodeHead); }
+static rec_t *code_max(void)
+    { return RB_MAX(CodeTree, &CodeHead); }
+static rec_t *code_root(void)
+    { return RB_ROOT(&CodeHead); }
+#endif
+
+static rec_t *str_remove(rec_t *rec)
+    { return RB_REMOVE(StringTree, &StringHead, rec); }
+static rec_t *str_insert(rec_t *rec)
+    { return RB_INSERT(StringTree, &StringHead, rec); }
+static rec_t *str_search(uint32_t domain, const char* str)
+    { rec_t tmp; tmp.domain = domain; tmp.str = (char*)str; return RB_FIND(StringTree, &StringHead, &tmp); }
+#if 0
+static rec_t *str_first(uint32_t domain, const char* str )
+    { rec_t tmp; tmp.domain = domain; tmp.str = str; return RB_NFIND(StringTree, &StringHead, &tmp); }
+static rec_t *str_next(rec_t *rec)
+    { return RB_NEXT(StringTree, &StringHead, rec); }
+static rec_t *str_prev(rec_t *rec)
+    { return RB_PREV(StringTree, &StringHead, rec); }
+static rec_t *str_min(void)
+    { return RB_MIN(StringTree, &StringHead); }
+static rec_t *str_max(void)
+    { return RB_MAX(StringTree, &StringHead); }
+static rec_t *str_root(void)
+    { return RB_ROOT(&StringHead); }
+#endif
+
+
+static int enums_new(lua_State *L, uint32_t domain, uint32_t code, const char *str)
+    {
+    rec_t *rec;
+    if((rec = (rec_t*)Malloc(L, sizeof(rec_t))) == NULL)
+        return luaL_error(L, errstring(ERR_MEMORY));
+
+    memset(rec, 0, sizeof(rec_t));
+    rec->domain = domain;
+    rec->code = code;
+    rec->str = Strdup(L, str);
+    if(code_search(domain, code) || str_search(domain, str))
         {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_ORIENTATION_FILL_RIGHT, "fill right"); /* FT_ORIENTATION_TRUETYPE */
-        CASE(FT_ORIENTATION_FILL_LEFT, "fill left"); /* FT_ORIENTATION_POSTSCRIPT */
-        CASE(FT_ORIENTATION_NONE, "none");
-#undef CASE
-        default:
-            return unexpected(L);
+        Free(L, rec->str);
+        Free(L, rec);
+        return unexpected(L); /* duplicate value */
         }
+    code_insert(rec);
+    str_insert(rec);
+    return 0;
+    }
+
+static void enums_free(lua_State *L, rec_t* rec)
+    {
+    if(code_search(rec->domain, rec->code) == rec)
+        code_remove(rec);
+    if(str_search(rec->domain, rec->str) == rec)
+        str_remove(rec);
+    Free(L, rec->str);
+    Free(L, rec);
+    }
+
+void enums_free_all(lua_State *L)
+    {
+    rec_t *rec;
+    while((rec = code_first(0, 0)))
+        enums_free(L, rec);
+    }
+
+#if 0
+uint32_t enums_code(uint32_t domain, const char *str, int* found)
+    {
+    rec_t *rec = str_search(domain, str);
+    if(!rec)
+        { *found = 0; return 0; }
+    *found = 1;
+    return rec->code;
+    }
+
+const char* enums_string(uint32_t domain, uint32_t code)
+    {
+    rec_t *rec = code_search(domain, code);
+    if(!rec)
+        return NULL;
+    return rec->str;
+    }
+
+#endif
+
+
+uint32_t enums_test(lua_State *L, uint32_t domain, int arg, int *err)
+    {
+    rec_t *rec;
+    const char *s = luaL_optstring(L, arg, NULL);
+
+    if(!s)
+        { *err = ERR_NOTPRESENT; return 0; }
+
+    rec = str_search(domain, s);
+    if(!rec)
+        { *err = ERR_VALUE; return 0; }
+
+    *err = ERR_SUCCESS;
+    return rec->code;
+    }
+
+uint32_t enums_check(lua_State *L, uint32_t domain, int arg)
+    {
+    rec_t *rec;
+    const char *s = luaL_checkstring(L, arg);
+
+    rec = str_search(domain, s);
+    if(!rec)
+        return luaL_argerror(L, arg, badvalue(L, s));
+
+    return rec->code;
+    }
+
+int enums_push(lua_State *L, uint32_t domain, uint32_t code)
+    {
+    rec_t *rec = code_search(domain, code);
+
+    if(!rec)
+        return unexpected(L);
+
+    lua_pushstring(L, rec->str);
+    return 1;
+    }
+
+int enums_values(lua_State *L, uint32_t domain)
+    {
+    int i;
+    rec_t *rec;
+
+    lua_newtable(L);
+    i = 1;
+    rec = code_first(domain, 0);
+    while(rec)
+        {
+        if(rec->domain == domain)
+            {
+            lua_pushstring(L, rec->str);
+            lua_rawseti(L, -2, i++);
+            }
+        rec = code_next(rec);
+        }
+
     return 1;
     }
 
 
-/*----------------------------------------------------------------------*
- | FT_StrokerBorder                                                     |
- *----------------------------------------------------------------------*/
-
-unsigned int checkstrokerborder(lua_State *L, int arg)
+uint32_t* enums_checklist(lua_State *L, uint32_t domain, int arg, uint32_t *count, int *err)
     {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_STROKER_BORDER_LEFT, "left");
-        CASE(FT_STROKER_BORDER_RIGHT, "right");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
+    uint32_t* list;
+    uint32_t i;
 
-int pushstrokerborder(lua_State *L, unsigned int value)
-    {
-    switch(value)
+    *count = 0;
+    *err = 0;
+    if(lua_isnoneornil(L, arg))
+        { *err = ERR_NOTPRESENT; return NULL; }
+    if(lua_type(L, arg) != LUA_TTABLE)
+        { *err = ERR_TABLE; return NULL; }
+
+    *count = luaL_len(L, arg);
+    if(*count == 0)
+        { *err = ERR_NOTPRESENT; return NULL; }
+
+    list = (uint32_t*)MallocNoErr(L, sizeof(uint32_t) * (*count));
+    if(!list)
+        { *count = 0; *err = ERR_MEMORY; return NULL; }
+
+    for(i=0; i<*count; i++)
         {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_STROKER_BORDER_LEFT, "left");
-        CASE(FT_STROKER_BORDER_RIGHT, "right");
-#undef CASE
-        default:
-            return unexpected(L);
+        lua_rawgeti(L, arg, i+1);
+        list[i] = enums_test(L, domain, -1, err);
+        lua_pop(L, 1);
+        if(*err)
+            { Free(L, list); *count = 0; return NULL; }
         }
-    return 1;
+    return list;
     }
 
-
-/*----------------------------------------------------------------------*
- | FT_Stroker_LineJoin                                                  |
- *----------------------------------------------------------------------*/
-
-unsigned int checkstrokerlinejoin(lua_State *L, int arg)
+void enums_freelist(lua_State *L, uint32_t *list)
     {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_STROKER_LINEJOIN_ROUND, "round");
-        CASE(FT_STROKER_LINEJOIN_BEVEL, "bevel");
-        CASE(FT_STROKER_LINEJOIN_MITER_VARIABLE, "miter variable");
-        CASE(FT_STROKER_LINEJOIN_MITER_FIXED, "miter fixed");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
+    if(!list)
+        return;
+    Free(L, list);
     }
 
-int pushstrokerlinejoin(lua_State *L, unsigned int value)
+/*------------------------------------------------------------------------------*
+ |                                                                              |
+ *------------------------------------------------------------------------------*/
+
+static int Enum(lua_State *L)
+/* { strings } = cl.enum('type') lists all the values for a given enum type */
     {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_STROKER_LINEJOIN_ROUND, "round");
-        CASE(FT_STROKER_LINEJOIN_BEVEL, "bevel");
-        CASE(FT_STROKER_LINEJOIN_MITER_VARIABLE, "miter variable");
-        CASE(FT_STROKER_LINEJOIN_MITER_FIXED, "miter fixed");
+    const char *s = luaL_checkstring(L, 1);
+#define CASE(xxx) if(strcmp(s, ""#xxx) == 0) return values##xxx(L)
+    CASE(type);
+    CASE(orientation);
+    CASE(strokerborder);
+    CASE(strokerlinejoin);
+    CASE(strokerlinecap);
+    CASE(glyphbboxmode);
+    CASE(truetypeenginetype);
+    CASE(sizerequesttype);
+    CASE(kerningmode);
+    CASE(rendermode);
+    CASE(encoding);
+    CASE(glyphformat);
+    CASE(pixelmode);
 #undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
+    return 0;
     }
 
-
-/*----------------------------------------------------------------------*
- | FT_Stroker_LineCap                                                   |
- *----------------------------------------------------------------------*/
-
-unsigned int checkstrokerlinecap(lua_State *L, int arg)
+static const struct luaL_Reg Functions[] =
     {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_STROKER_LINECAP_BUTT, "butt");
-        CASE(FT_STROKER_LINECAP_ROUND, "round");
-        CASE(FT_STROKER_LINECAP_SQUARE, "square");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
+        { "enum", Enum },
+        { NULL, NULL } /* sentinel */
+    };
 
-int pushstrokerlinecap(lua_State *L, unsigned int value)
+void moonfreetype_open_enums(lua_State *L)
     {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_STROKER_LINECAP_BUTT, "butt");
-        CASE(FT_STROKER_LINECAP_ROUND, "round");
-        CASE(FT_STROKER_LINECAP_SQUARE, "square");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
+    uint32_t domain;
 
+    luaL_setfuncs(L, Functions, 0);
 
-/*----------------------------------------------------------------------*
- | FT_Glyph_BBox_Mode                                                   |
- *----------------------------------------------------------------------*/
+    /* Add all the code<->string mappings and the ft.XXX constant strings */
+#define ADD(what, s) do { enums_new(L, domain, NONFT_##what, s); } while(0)
+    domain = DOMAIN_NONFT_TYPE;
+    ADD(TYPE_CHAR, "char");
+    ADD(TYPE_UCHAR, "uchar");
+    ADD(TYPE_BYTE, "byte");
+    ADD(TYPE_UBYTE, "ubyte");
+    ADD(TYPE_SHORT, "short");
+    ADD(TYPE_USHORT, "ushort");
+    ADD(TYPE_INT, "int");
+    ADD(TYPE_UINT, "uint");
+    ADD(TYPE_LONG, "long");
+    ADD(TYPE_ULONG, "ulong");
+    ADD(TYPE_FLOAT, "float");
+    ADD(TYPE_DOUBLE, "double");
+#undef ADD
 
-unsigned int checkglyphbboxmode(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_GLYPH_BBOX_UNSCALED, "unscaled");
-        /* CASE(FT_GLYPH_BBOX_SUBPIXELS, "subpixels"); same as "unscaled" */
-        CASE(FT_GLYPH_BBOX_GRIDFIT, "gridfit");
-        CASE(FT_GLYPH_BBOX_TRUNCATE, "truncate");
-        CASE(FT_GLYPH_BBOX_PIXELS, "pixels");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
+#define ADD(what, s) do {                               \
+    lua_pushstring(L, s); lua_setfield(L, -2, #what);   \
+    enums_new(L, domain, FT_##what, s);                 \
+} while(0)
 
-int pushbglyphboxmode(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_GLYPH_BBOX_UNSCALED, "unscaled");
-        /* CASE(FT_GLYPH_BBOX_SUBPIXELS, "subpixels"); same as "unscaled" */
-        CASE(FT_GLYPH_BBOX_GRIDFIT, "gridfit");
-        CASE(FT_GLYPH_BBOX_TRUNCATE, "truncate");
-        CASE(FT_GLYPH_BBOX_PIXELS, "pixels");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
+    domain = DOMAIN_FT_ORIENTATION;
+    ADD(ORIENTATION_FILL_RIGHT, "fill right"); /* FT_ORIENTATION_TRUETYPE */
+    ADD(ORIENTATION_FILL_LEFT, "fill left"); /* FT_ORIENTATION_POSTSCRIPT */
+    ADD(ORIENTATION_NONE, "none");
 
+    domain = DOMAIN_FT_STROKER_BORDER;
+    ADD(STROKER_BORDER_LEFT, "left");
+    ADD(STROKER_BORDER_RIGHT, "right");
 
-/*----------------------------------------------------------------------*
- | FT_TrueTypeEngineType                                                |
- *----------------------------------------------------------------------*/
+    domain = DOMAIN_FT_STROKER_LINEJOIN;
+    ADD(STROKER_LINEJOIN_ROUND, "round");
+    ADD(STROKER_LINEJOIN_BEVEL, "bevel");
+    ADD(STROKER_LINEJOIN_MITER_VARIABLE, "miter variable");
 
-unsigned int checktruetypeenginetype(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_TRUETYPE_ENGINE_TYPE_NONE, "none");
-        CASE(FT_TRUETYPE_ENGINE_TYPE_PATENTED, "patented");
-        CASE(FT_TRUETYPE_ENGINE_TYPE_UNPATENTED, "unpatented");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
+    domain = DOMAIN_FT_STROKER_LINECAP;
+    ADD(STROKER_LINECAP_BUTT, "butt");
+    ADD(STROKER_LINECAP_ROUND, "round");
+    ADD(STROKER_LINECAP_SQUARE, "square");
 
-int pushtruetypeenginetype(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_TRUETYPE_ENGINE_TYPE_NONE, "none");
-        CASE(FT_TRUETYPE_ENGINE_TYPE_PATENTED, "patented");
-        CASE(FT_TRUETYPE_ENGINE_TYPE_UNPATENTED, "unpatented");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
+    domain = DOMAIN_FT_GLYPH_BBOX;
+    ADD(GLYPH_BBOX_UNSCALED, "unscaled");
+//  ADD(GLYPH_BBOX_SUBPIXELS, "subpixels"); same as "unscaled"
+    ADD(GLYPH_BBOX_GRIDFIT, "gridfit");
+    ADD(GLYPH_BBOX_TRUNCATE, "truncate");
+    ADD(GLYPH_BBOX_PIXELS, "pixels");
 
+    domain = DOMAIN_FT_TRUETYPE_ENGINE_TYPE;
+    ADD(TRUETYPE_ENGINE_TYPE_NONE, "none");
+    ADD(TRUETYPE_ENGINE_TYPE_PATENTED, "patented");
+    ADD(TRUETYPE_ENGINE_TYPE_UNPATENTED, "unpatented");
 
-/*----------------------------------------------------------------------*
- | FT_Size_Request_Type                                                 |
- *----------------------------------------------------------------------*/
+    domain = DOMAIN_FT_SIZE_REQUEST_TYPE;
+    ADD(SIZE_REQUEST_TYPE_BBOX, "bbox");
+    ADD(SIZE_REQUEST_TYPE_CELL, "cell");
+    ADD(SIZE_REQUEST_TYPE_NOMINAL, "nominal");
+    ADD(SIZE_REQUEST_TYPE_REAL_DIM, "real dim");
+    ADD(SIZE_REQUEST_TYPE_SCALES, "scales");
 
-unsigned int checksizerequesttype(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_SIZE_REQUEST_TYPE_BBOX, "bbox");
-        CASE(FT_SIZE_REQUEST_TYPE_CELL, "cell");
-        CASE(FT_SIZE_REQUEST_TYPE_NOMINAL, "nominal");
-        CASE(FT_SIZE_REQUEST_TYPE_REAL_DIM, "real dim");
-        CASE(FT_SIZE_REQUEST_TYPE_SCALES, "scales");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
+    domain = DOMAIN_FT_KERNING;
+    ADD(KERNING_DEFAULT, "default");
+    ADD(KERNING_UNFITTED, "unfitted");
+    ADD(KERNING_UNSCALED, "unscaled");
 
-int pushsizerequesttype(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_SIZE_REQUEST_TYPE_BBOX, "bbox");
-        CASE(FT_SIZE_REQUEST_TYPE_CELL, "cell");
-        CASE(FT_SIZE_REQUEST_TYPE_NOMINAL, "nominal");
-        CASE(FT_SIZE_REQUEST_TYPE_REAL_DIM, "real dim");
-        CASE(FT_SIZE_REQUEST_TYPE_SCALES, "scales");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
+    domain = DOMAIN_FT_RENDER_MODE;
+    ADD(RENDER_MODE_NORMAL, "normal");
+    ADD(RENDER_MODE_LIGHT, "light");
+    ADD(RENDER_MODE_MONO, "mono");
+    ADD(RENDER_MODE_LCD, "lcd");
+    ADD(RENDER_MODE_LCD_V, "lcd v");
 
+    domain = DOMAIN_FT_ENCODING;
+    ADD(ENCODING_NONE, "none");
+    ADD(ENCODING_MS_SYMBOL, "ms symbol");
+    ADD(ENCODING_UNICODE, "unicode");
+    ADD(ENCODING_SJIS, "sjis");
+    ADD(ENCODING_GB2312, "gb2312");
+    ADD(ENCODING_BIG5, "big5");
+    ADD(ENCODING_WANSUNG, "wansung");
+    ADD(ENCODING_JOHAB, "johab");
+    ADD(ENCODING_ADOBE_STANDARD, "adobe standard");
+    ADD(ENCODING_ADOBE_EXPERT, "adobe expert");
+    ADD(ENCODING_ADOBE_CUSTOM, "adobe custom");
+    ADD(ENCODING_ADOBE_LATIN_1, "adobe latin 1");
+    ADD(ENCODING_APPLE_ROMAN, "apple roman");
 
-/*----------------------------------------------------------------------*
- | FT_Kerning_Mode                                                      |
- *----------------------------------------------------------------------*/
+    domain = DOMAIN_FT_GLYPH_FORMAT;
+    ADD(GLYPH_FORMAT_NONE, "none");
+    ADD(GLYPH_FORMAT_COMPOSITE, "composite");
+    ADD(GLYPH_FORMAT_BITMAP, "bitmap");
+    ADD(GLYPH_FORMAT_OUTLINE, "outline");
+    ADD(GLYPH_FORMAT_PLOTTER, "plotter");
 
-unsigned int checkkerningmode(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-    CASE(FT_KERNING_DEFAULT, "default");
-    CASE(FT_KERNING_UNFITTED, "unfitted");
-    CASE(FT_KERNING_UNSCALED, "unscaled");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
+    domain = DOMAIN_FT_PIXEL_MODE;
+    ADD(PIXEL_MODE_NONE, "none");
+    ADD(PIXEL_MODE_MONO, "mono");
+    ADD(PIXEL_MODE_GRAY, "gray");
+    ADD(PIXEL_MODE_GRAY2, "gray2");
+    ADD(PIXEL_MODE_GRAY4, "gray4");
+    ADD(PIXEL_MODE_LCD, "lcd");
+    ADD(PIXEL_MODE_LCD_V, "lcd v");
+    ADD(PIXEL_MODE_BGRA, "bgra");
 
-int pushkerningmode(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-    CASE(FT_KERNING_DEFAULT, "default");
-    CASE(FT_KERNING_UNFITTED, "unfitted");
-    CASE(FT_KERNING_UNSCALED, "unscaled");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
+#if 0 /* scaffolding */
+4yy
+#define DOMAIN_FT_
+    domain = DOMAIN_FT_;
+    ADD(, "");
 
+#endif
 
-/*----------------------------------------------------------------------*
- | FT_Render_Mode                                                       |
- *----------------------------------------------------------------------*/
-
-unsigned int checkrendermode(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-    CASE(FT_RENDER_MODE_NORMAL, "normal");
-    CASE(FT_RENDER_MODE_LIGHT, "light");
-    CASE(FT_RENDER_MODE_MONO, "mono");
-    CASE(FT_RENDER_MODE_LCD, "lcd");
-    CASE(FT_RENDER_MODE_LCD_V, "lcd v");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
-
-int pushrendermode(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-    CASE(FT_RENDER_MODE_NORMAL, "normal");
-    CASE(FT_RENDER_MODE_LIGHT, "light");
-    CASE(FT_RENDER_MODE_MONO, "mono");
-    CASE(FT_RENDER_MODE_LCD, "lcd");
-    CASE(FT_RENDER_MODE_LCD_V, "lcd v");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
-
-
-/*----------------------------------------------------------------------*
- | FT_Encoding                                                          |
- *----------------------------------------------------------------------*/
-
-unsigned int checkencoding(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-    CASE(FT_ENCODING_NONE, "none");
-    CASE(FT_ENCODING_MS_SYMBOL, "ms symbol");
-    CASE(FT_ENCODING_UNICODE, "unicode");
-    CASE(FT_ENCODING_SJIS, "sjis");
-    CASE(FT_ENCODING_GB2312, "gb2312");
-    CASE(FT_ENCODING_BIG5, "big5");
-    CASE(FT_ENCODING_WANSUNG, "wansung");
-    CASE(FT_ENCODING_JOHAB, "johab");
-    CASE(FT_ENCODING_ADOBE_STANDARD, "adobe standard");
-    CASE(FT_ENCODING_ADOBE_EXPERT, "adobe expert");
-    CASE(FT_ENCODING_ADOBE_CUSTOM, "adobe custom");
-    CASE(FT_ENCODING_ADOBE_LATIN_1, "adobe latin 1");
-    CASE(FT_ENCODING_APPLE_ROMAN, "apple roman");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
-
-int pushencoding(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-    CASE(FT_ENCODING_NONE, "none");
-    CASE(FT_ENCODING_MS_SYMBOL, "ms symbol");
-    CASE(FT_ENCODING_UNICODE, "unicode");
-    CASE(FT_ENCODING_SJIS, "sjis");
-    CASE(FT_ENCODING_GB2312, "gb2312");
-    CASE(FT_ENCODING_BIG5, "big5");
-    CASE(FT_ENCODING_WANSUNG, "wansung");
-    CASE(FT_ENCODING_JOHAB, "johab");
-    CASE(FT_ENCODING_ADOBE_STANDARD, "adobe standard");
-    CASE(FT_ENCODING_ADOBE_EXPERT, "adobe expert");
-    CASE(FT_ENCODING_ADOBE_CUSTOM, "adobe custom");
-    CASE(FT_ENCODING_ADOBE_LATIN_1, "adobe latin 1");
-    CASE(FT_ENCODING_APPLE_ROMAN, "apple roman");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
-
-
-
-/*----------------------------------------------------------------------*
- | FT_Glyph_Format                                                      |
- *----------------------------------------------------------------------*/
-
-unsigned int checkglyphformat(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_GLYPH_FORMAT_NONE, "none");
-        CASE(FT_GLYPH_FORMAT_COMPOSITE, "composite");
-        CASE(FT_GLYPH_FORMAT_BITMAP, "bitmap");
-        CASE(FT_GLYPH_FORMAT_OUTLINE, "outline");
-        CASE(FT_GLYPH_FORMAT_PLOTTER, "plotter");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
-
-int pushglyphformat(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_GLYPH_FORMAT_NONE, "none");
-        CASE(FT_GLYPH_FORMAT_COMPOSITE, "composite");
-        CASE(FT_GLYPH_FORMAT_BITMAP, "bitmap");
-        CASE(FT_GLYPH_FORMAT_OUTLINE, "outline");
-        CASE(FT_GLYPH_FORMAT_PLOTTER, "plotter");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
-    }
-
-
-/*----------------------------------------------------------------------*
- | FT_Pixel_Mode                                                        |
- *----------------------------------------------------------------------*/
-
-unsigned int checkpixelmode(lua_State *L, int arg)
-    {
-    const char *s = luaL_checkstring(L, arg);
-#define CASE(CODE,str) if((strcmp(s, str)==0)) return CODE
-        CASE(FT_PIXEL_MODE_NONE, "none");
-        CASE(FT_PIXEL_MODE_MONO, "mono");
-        CASE(FT_PIXEL_MODE_GRAY, "gray");
-        CASE(FT_PIXEL_MODE_GRAY2, "gray2");
-        CASE(FT_PIXEL_MODE_GRAY4, "gray4");
-        CASE(FT_PIXEL_MODE_LCD, "lcd");
-        CASE(FT_PIXEL_MODE_LCD_V, "lcd v");
-        CASE(FT_PIXEL_MODE_BGRA, "bgra");
-#undef CASE
-    return (unsigned int)luaL_argerror(L, arg, badvalue(L,s));
-    }
-
-int pushpixelmode(lua_State *L, unsigned int value)
-    {
-    switch(value)
-        {
-#define CASE(CODE,str) case CODE: lua_pushstring(L, str); break
-        CASE(FT_PIXEL_MODE_NONE, "none");
-        CASE(FT_PIXEL_MODE_MONO, "mono");
-        CASE(FT_PIXEL_MODE_GRAY, "gray");
-        CASE(FT_PIXEL_MODE_GRAY2, "gray2");
-        CASE(FT_PIXEL_MODE_GRAY4, "gray4");
-        CASE(FT_PIXEL_MODE_LCD, "lcd");
-        CASE(FT_PIXEL_MODE_LCD_V, "lcd v");
-        CASE(FT_PIXEL_MODE_BGRA, "bgra");
-#undef CASE
-        default:
-            return unexpected(L);
-        }
-    return 1;
+#undef ADD
     }
 

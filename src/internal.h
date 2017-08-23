@@ -39,6 +39,7 @@
 #include FT_STROKER_H
 #include "tree.h"
 #include "udata.h"
+#include "enums.h"
 
 /* Note: all the dynamic symbols of this library (should) start with 'moonfreetype_' .
  * The only exception is the luaopen_moonfreetype() function, which is searched for
@@ -85,6 +86,10 @@ int noprintf(const char *fmt, ...);
 int notavailable(lua_State *L, ...);
 #define Malloc moonfreetype_Malloc
 void *Malloc(lua_State *L, size_t size);
+#define MallocNoErr moonfreetype_MallocNoErr
+void *MallocNoErr(lua_State *L, size_t size);
+#define Strdup moonfreetype_Strdup
+char *Strdup(lua_State *L, const char *s);
 #define Free moonfreetype_Free
 void Free(lua_State *L, void *ptr);
 #define checkboolean moonfreetype_checkboolean
@@ -99,10 +104,6 @@ int optindex(lua_State *L, int arg, int optval /* 0-based */);
 void pushindex(lua_State *L, int val);
 #define checkcharcode moonfreetype_checkcharcode
 FT_ULong checkcharcode(lua_State *L, int arg);
-#define checkglyphformat moonfreetype_checkglyphformat
-unsigned int checkglyphformat(lua_State *L, int arg);
-#define pushglyphformat moonfreetype_pushglyphformat
-int pushglyphformat(lua_State *L, unsigned int value);
 #define pushglyphslot moonfreetype_pushglyphslot
 int pushglyphslot(lua_State *L, FT_GlyphSlot glyph);
 #define pushglyphmetrics moonfreetype_pushglyphmetrics
@@ -193,6 +194,8 @@ int freesize(lua_State *L, FT_Size *size);
 
 /* main.c */
 int luaopen_moonfreetype(lua_State *L);
+void moonfreetype_utils_init(lua_State *L);
+void moonfreetype_open_enums(lua_State *L);
 void moonfreetype_open_additional(lua_State *L);
 void moonfreetype_open_computations(lua_State *L);
 void moonfreetype_open_library(lua_State *L);
@@ -213,52 +216,6 @@ void moonfreetype_open_stroker(lua_State *L);
 #if 0
 #define  moonfreetype_
 #endif
-
-/* enum.c */
-#define checkorientation moonfreetype_checkorientation
-unsigned int checkorientation(lua_State *L, int arg);
-#define pushorientation moonfreetype_pushorientation
-int pushorientation(lua_State *L, unsigned int value);
-#define checkstrokerborder moonfreetype_checkstrokerborder
-unsigned int checkstrokerborder(lua_State *L, int arg);
-#define pushstrokerborder moonfreetype_pushstrokerborder
-int pushstrokerborder(lua_State *L, unsigned int value);
-#define checkstrokerlinejoin moonfreetype_checkstrokerlinejoin
-unsigned int checkstrokerlinejoin(lua_State *L, int arg);
-#define pushstrokerlinejoin moonfreetype_pushstrokerlinejoin
-int pushstrokerlinejoin(lua_State *L, unsigned int value);
-#define checkstrokerlinecap moonfreetype_checkstrokerlinecap
-unsigned int checkstrokerlinecap(lua_State *L, int arg);
-#define pushstrokerlinecap moonfreetype_pushstrokerlinecap
-int pushstrokerlinecap(lua_State *L, unsigned int value);
-#define checkglyphbboxmode moonfreetype_checkglyphbboxmode
-unsigned int checkglyphbboxmode(lua_State *L, int arg);
-#define pushbglyphboxmode moonfreetype_pushbglyphboxmode
-int pushbglyphboxmode(lua_State *L, unsigned int value);
-#define checktruetypeenginetype moonfreetype_checktruetypeenginetype
-unsigned int checktruetypeenginetype(lua_State *L, int arg);
-#define pushtruetypeenginetype moonfreetype_pushtruetypeenginetype
-int pushtruetypeenginetype(lua_State *L, unsigned int value);
-#define checksizerequesttype moonfreetype_checksizerequesttype
-unsigned int checksizerequesttype(lua_State *L, int arg);
-#define pushsizerequesttype moonfreetype_pushsizerequesttype
-int pushsizerequesttype(lua_State *L, unsigned int value);
-#define checkkerningmode moonfreetype_checkkerningmode
-unsigned int checkkerningmode(lua_State *L, int arg);
-#define pushkerningmode moonfreetype_pushkerningmode
-int pushkerningmode(lua_State *L, unsigned int value);
-#define checkrendermode moonfreetype_checkrendermode
-unsigned int checkrendermode(lua_State *L, int arg);
-#define pushrendermode moonfreetype_pushrendermode
-int pushrendermode(lua_State *L, unsigned int value);
-#define checkencoding moonfreetype_checkencoding
-unsigned int checkencoding(lua_State *L, int arg);
-#define pushencoding moonfreetype_pushencoding
-int pushencoding(lua_State *L, unsigned int value);
-#define checkpixelmode moonfreetype_checkpixelmode
-unsigned int checkpixelmode(lua_State *L, int arg);
-#define pushpixelmode moonfreetype_pushpixelmode
-int pushpixelmode(lua_State *L, unsigned int value);
 
 /* bitfield.c */
 #define checkfstypeflags moonfreetype_checkfstypeflags
@@ -281,6 +238,22 @@ int pushloadflags(lua_State *L, FT_Int32 flags, int pushcode);
 /*------------------------------------------------------------------------------*
  | Debug and other utilities                                                    |
  *------------------------------------------------------------------------------*/
+
+/* Internal error codes */
+#define ERR_NOTPRESENT       1
+#define ERR_SUCCESS          0
+#define ERR_GENERIC         -1
+#define ERR_TYPE            -2
+#define ERR_VALUE           -3
+#define ERR_TABLE           -4
+#define ERR_EMPTY           -5
+#define ERR_MEMORY          -6
+#define ERR_LENGTH          -7
+#define ERR_POOL            -8
+#define ERR_BOUNDARIES      -9
+#define ERR_UNKNOWN         -10
+#define errstring moonfreetype_errstring
+const char* errstring(int err);
 
 
 #define checkoption luaL_checkoption

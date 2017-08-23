@@ -120,7 +120,9 @@ int luaopen_moonfreetype(lua_State *L)
     {
     moonfreetype_L = L;
     
+    moonfreetype_utils_init(L);
     lua_newtable(L); /* the freetype table */
+    moonfreetype_open_enums(L);
     AddVersions(L);
     AddConstants(L);
     
