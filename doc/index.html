@@ -809,9 +809,8 @@ p.tableblock.header { color: #6d6e71; }
 </li>
 <li><a href="#_error_codes">Error Codes</a></li>
 <li><a href="#_structs">Structs</a></li>
-<li><a href="#enumerations">Enumerations and bitfields</a></li>
-<li><a href="#_additional_utilities">Additional utilities</a></li>
-<li><a href="#_code_snippets">Code snippets</a></li>
+<li><a href="#enums">Enums</a></li>
+<li><a href="#flags">Flags</a></li>
 <li><a href="#_implementation_notes">Implementation notes</a></li>
 </ul>
 </div>
@@ -1469,12 +1468,12 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_proc
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Orientation">FT_Outline_Get_Orientation</a>.</span></p>
 </li>
 <li>
-<p><a href="#border"><em>border</em></a> = <strong>outline_getinsideborder</strong>(<em>outline</em>)<br>
+<p><a href="#strokerborder"><em>border</em></a> = <strong>outline_getinsideborder</strong>(<em>outline</em>)<br>
 <span class="small">Also available as <em>outline:getinsideborder(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetInsideBorder">FT_Outline_GetInsideBorder</a>.</span></p>
 </li>
 <li>
-<p><a href="#border"><em>border</em></a> = <strong>outline_getoutsideborder</strong>(<em>outline</em>)<br>
+<p><a href="#strokerborder"><em>border</em></a> = <strong>outline_getoutsideborder</strong>(<em>outline</em>)<br>
 <span class="small">Also available as <em>outline:getoutsideborder(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetOutsideBorder">FT_Outline_GetOutsideBorder</a>.</span></p>
 </li>
@@ -1579,7 +1578,7 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroke
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Rewind">FT_Stroker_Rewind</a>.</span></p>
 </li>
 <li>
-<p><strong>stroker_set</strong>(<em>stroker</em>, <em>radius</em>, <a href="#linecap"><em>linecap</em></a>, <a href="#linejoin"><em>linejoin</em></a>, <em>miterlimit</em>)<br>
+<p><strong>stroker_set</strong>(<em>stroker</em>, <em>radius</em>, <a href="#strokerlinecap"><em>linecap</em></a>, <a href="#strokerlinejoin"><em>linejoin</em></a>, <em>miterlimit</em>)<br>
 <span class="small">Also available as <em>stroker:set(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Set">FT_Stroker_Set</a>.</span></p>
 </li>
@@ -1607,7 +1606,7 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroke
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetCounts">FT_Stroker_GetCounts</a>.</span></p>
 </li>
 <li>
-<p><em>numpoints</em>, <em>numcontours</em> = <strong>stroker_getbordercounts</strong>(<em>stroker</em>, <a href="#border"><em>border</em></a>)<br>
+<p><em>numpoints</em>, <em>numcontours</em> = <strong>stroker_getbordercounts</strong>(<em>stroker</em>, <a href="#strokerborder"><em>border</em></a>)<br>
 <span class="small">Also available as <em>stroker:getbordercounts(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetBorderCounts">FT_Stroker_GetBorderCounts</a>.</span></p>
 </li>
@@ -1625,7 +1624,7 @@ Also available as <em>stroker:export(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Export">FT_Stroker_Export</a>.</span></p>
 </li>
 <li>
-<p><strong>stroker_exportborder</strong>(<em>stroker</em>, <a href="#border"><em>border</em></a>, <a href="#outline"><em>outline</em></a>)<br>
+<p><strong>stroker_exportborder</strong>(<em>stroker</em>, <a href="#strokerborder"><em>border</em></a>, <a href="#outline"><em>outline</em></a>)<br>
 <span class="small">Stroker and outline must belong to the same library.<br>
 Also available as <em>stroker:exportborder(&nbsp;)</em> method.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ExportBorder">FT_Stroker_ExportBorder</a>.</span></p>
@@ -1726,7 +1725,7 @@ Note: The fields <em>bitmap_left</em>, and <em>bitmap_top</em> are moved in the 
 <span class="small"><strong>matrix</strong> = {<br>
 <em>xx</em>, <em>xy</em>: integer,<br>
 <em>yx</em>, <em>yy</em>: integer,<br>
-}(rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Matrix">FT_Matrix</a>)</span></p>
+} (rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Matrix">FT_Matrix</a>)</span></p>
 </li>
 <li>
 <p><a id="outlinedata"></a>
@@ -1769,197 +1768,148 @@ Note: The fields <em>bitmap_left</em>, and <em>bitmap_top</em> are moved in the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="enumerations">Enumerations and bitfields</h2>
+<h2 id="enums">Enums</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An <strong>enumeration</strong> is a string (a literal) from a well defined set of values.</p>
+<p>FreeType enums are mapped in MoonFreeType to sets of string literals (as is customary in Lua).
+Admitted literals are available in the <strong>ft</strong> table (e.g. *ft.ENCODING_XXX for FT_ENCODING_XXX),
+and can also be inferred from the corresponding C enum names. For example, given the
+ft.ENCODING_XXX hint for the <a href="#encoding">encoding</a> enum type, the literals it admits
+are obtained by lowercasing the XXX part of the name and replacing any underscore with a space.</p>
 </div>
 <div class="paragraph">
-<p>A <strong>bitfield</strong> represents a set of or&#8217;d flags. When used as a function argument it may be passed either as an integer code, or as a sequence of strings from a well defined set of values. When it is not the last argument of the function, it may be passed only as an integer code. Functions returning a <strong>bitfield</strong> return the integer code only (utilities are provided to <a href="#additional">encode/decode bitfields</a>, if needed).</p>
+<p>If needed, the following function can be used to obtain the list of literals admitted by
+a particular enum type.</p>
 </div>
-<div id="bboxmode" class="ulist">
+<div id="ft.enum" class="ulist">
 <ul>
 <li>
-<p><strong>bboxmode</strong>: enumeration.<br>
-<span class="small">Values: '<em>unscaled</em>', '<em>gridfit</em>', '<em>truncate</em>', '<em>pixels</em>'.<br>
+<p>{<em>literal</em>} = <strong>ft.enum</strong>(<em>enumtype</em>)<br>
+<span class="small">Returns a table listing the literals admitted by <em>enumtype</em> (given as a string, e.g.
+'<em>ms symbol</em>', '<em>unicode</em>', etc).</span></p>
+</li>
+</ul>
+</div>
+<div id="bboxmode" class="paragraph">
+<p><span class="small"><strong>bboxmode</strong>: ft.GLYPH_BBOX_XXX<br>
+Values: '<em>unscaled</em>', '<em>gridfit</em>', '<em>truncate</em>', '<em>pixels</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_BBox_Mode">FT_Glyph_BBox_Mode</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="border" class="ulist">
-<ul>
-<li>
-<p><strong>border</strong>: enumeration.<br>
-<span class="small">Values: '<em>left</em>', '<em>right</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_StrokerBorder">FT_StrokerBorder</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="encoding" class="ulist">
-<ul>
-<li>
-<p><strong>encoding</strong>: enumeration.<br>
-<span class="small">Values: '<em>none</em>', '<em>ms symbol</em>', '<em>unicode</em>', '<em>sjis</em>', '<em>gb2312</em>', '<em>big5</em>', '<em>wansung</em>', '<em>johab</em>', '<em>adobe standard</em>', '<em>adobe expert</em>', '<em>adobe custom</em>', '<em>adobe latin 1</em>', '<em>apple roman</em>'.<br>
+<div id="encoding" class="paragraph">
+<p><span class="small"><strong>encoding</strong>: ft.ENCODING_XXX<br>
+Values: '<em>none</em>', '<em>ms symbol</em>', '<em>unicode</em>', '<em>sjis</em>', '<em>gb2312</em>', '<em>big5</em>', '<em>wansung</em>', '<em>johab</em>', '<em>adobe standard</em>', '<em>adobe expert</em>', '<em>adobe custom</em>', '<em>adobe latin 1</em>', '<em>apple roman</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Encoding">FT_Encoding</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="fstypeflags" class="ulist">
-<ul>
-<li>
-<p><strong>fstypeflags</strong>: bitfield.<br>
-<span class="small">Code: a combination of ft.FSTYPE_XXX values (corresponding to FT_FSTYPE_XXX defines).<br>
-Strings: '<em>installable embedding</em>' (0), '<em>restricted license embedding</em>', '<em>preview and print embedding</em>', '<em>editable embedding</em>', '<em>no subsetting</em>', '<em>bitmap embedding only</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FSTYPE_XXX">FT_FSTYPE_XXX</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="glyphformat" class="ulist">
-<ul>
-<li>
-<p><strong>glyphformat</strong>: enumeration.<br>
-<span class="small">Values: '<em>none</em>', '<em>composite</em>', '<em>bitmap</em>', '<em>outline</em>', '<em>plotter</em>'.<br>
+<div id="glyphformat" class="paragraph">
+<p><span class="small"><strong>glyphformat</strong>: ft.GLYPH_FORMAT_XXX<br>
+Values: '<em>none</em>', '<em>composite</em>', '<em>bitmap</em>', '<em>outline</em>', '<em>plotter</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Glyph_Format">FT_Glyph_Format</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="kerningmode" class="ulist">
-<ul>
-<li>
-<p><strong>kerningmode</strong>: enumeration.<br>
-<span class="small">Values: '<em>default</em>', '<em>unfitted</em>', '<em>unscaled</em>'.<br>
+<div id="kerningmode" class="paragraph">
+<p><span class="small"><strong>kerningmode</strong>: ft.KERNING_XXX<br>
+Values: '<em>default</em>', '<em>unfitted</em>', '<em>unscaled</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Kerning_Mode">FT_Kerning_Mode</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="linecap" class="ulist">
-<ul>
-<li>
-<p><strong>linecap</strong>: enumeration.<br>
-<span class="small">Values: '<em>butt</em>', '<em>round</em>', '<em>square</em>'.<br>
+<div id="orientation" class="paragraph">
+<p><span class="small"><strong>orientation</strong>: ft.ORIENTATION_XXX<br>
+Values: '<em>fill right</em>' (truetype), '<em>fill left</em>' (postscript).<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Orientation">FT_Orientation</a>.</span></p>
+</div>
+<div id="pixelmode" class="paragraph">
+<p><span class="small"><strong>pixelmode</strong>: ft.PIXEL_MODE_XXX<br>
+Values: '<em>none</em>', '<em>mono</em>', '<em>gray</em>', '<em>gray2</em>', '<em>gray4</em>', '<em>lcd</em>', '<em>lcd v</em>', '<em>bgra</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Pixel_Mode">FT_Pixel_Mode</a>.</span></p>
+</div>
+<div id="pointtype" class="paragraph">
+<p><span class="small"><strong>pointtype</strong>: -<br>
+Values: '<em>on</em>', '<em>cubic</em>', or '<em>conic</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline">FT_Outline tags</a>.</span></p>
+</div>
+<div id="rendermode" class="paragraph">
+<p><span class="small"><strong>rendermode</strong>: ft.RENDER_MODE_XXX<br>
+Values: '<em>normal</em>', '<em>light</em>', '<em>mono</em>', '<em>lcd</em>', '<em>lcd v</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Render_Mode">FT_Render_Mode</a>.</span></p>
+</div>
+<div id="scanmode" class="paragraph">
+<p><span class="small"><strong>scanmode</strong>: -<br>
+Values: '<em>none</em>', '<em>touch x</em>', '<em>touch y</em>', or '<em>touch both</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline">FT_Outline tags</a>.</span></p>
+</div>
+<div id="sizerequesttype" class="paragraph">
+<p><span class="small"><strong>sizerequesttype</strong>: ft.SIZE_REQUEST_XXX<br>
+Values: '<em>bbox</em>', '<em>cell</em>', '<em>nominal</em>', '<em>real dim</em>', '<em>scales</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_Request_Type">FT_Size_Request_Type</a>.</span></p>
+</div>
+<div id="strokerborder" class="paragraph">
+<p><span class="small"><strong>strokerborder</strong>: ft.STROKER_BORDER_XXX<br>
+Values: '<em>left</em>', '<em>right</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_StrokerBorder">FT_StrokerBorder</a>.</span></p>
+</div>
+<div id="strokerlinecap" class="paragraph">
+<p><span class="small"><strong>strokerlinecap</strong>: ft.STROKER_LINECAP_XXX<br>
+Values: '<em>butt</em>', '<em>round</em>', '<em>square</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_LineCap">FT_Stroker_LineCap</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="linejoin" class="ulist">
-<ul>
-<li>
-<p><strong>linejoin</strong>: enumeration.<br>
-<span class="small">Values: '<em>round</em>', '<em>bevel</em>', '<em>miter variable</em>', '<em>miter fixed</em>'.<br>
+<div id="strokerlinejoin" class="paragraph">
+<p><span class="small"><strong>strokerlinejoin</strong>: ft.STROKER_LINEJOIN_XXX<br>
+Values: '<em>round</em>', '<em>bevel</em>', '<em>miter variable</em>', '<em>miter fixed</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_LineJoin">FT_Stroker_LineJoin</a>.</span></p>
+</div>
+<div id="truetypeenginetype" class="paragraph">
+<p><span class="small"><strong>truetypeenginetype</strong>: ft.TRUETYPE_ENGINE_TYPE_XXX<br>
+Values: '<em>none</em>', '<em>patented</em>', '<em>unpatented</em>'<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-truetype_engine.html#FT_TrueTypeEngineType">FT_TrueTypeEngineType</a>.</span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="flags">Flags</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Flags in MoonFreeType functions and structs are always represented as plain integers,
+and encoded in the same way as the corresponding flags in the FreeType API.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>ft</strong> table contains the FT_XXX values, renamed as <strong>ft.XXX</strong>
+(e.g. ft.LOAD_RENDER, ft.LOAD_NO_SCALE, etc.).</p>
+</div>
+<div class="paragraph">
+<p>For each flags type (see the list below), a utility function is also available to map
+an integer code to a list of string literals, each corresponding to an individual bit set
+in the code, and viceversa to encode an integer value from the individual bits given
+as a list of string literals.
+The generic definition of such functions is the following, where <strong>xxxflags</strong> stands for
+<strong>fstypeflags</strong>, <strong>loadflags</strong>, etc:</p>
+</div>
+<div id="xxxflags" class="ulist">
+<ul>
+<li>
+<p><em>code</em> = <strong>xxxflags</strong>(<em>s1</em>, <em>s2</em>, <em>&#8230;&#8203;</em>)<br>
+<em>s1</em>, <em>s2</em>, <em>&#8230;&#8203;</em> = <strong>xxxflags</strong>(<em>code</em>)<br>
+<span class="small">Maps the integer <em>code</em> to/from the list of string values <em>s1</em>, <em>s2</em>, <em>&#8230;&#8203;</em>.</span></p>
 </li>
 </ul>
 </div>
-<div id="loadflags" class="ulist">
-<ul>
-<li>
-<p><strong>loadflags</strong>: bitfield.<br>
-<span class="small">Code: a combination of ft.LOAD_XXX values (corresponding to FT_LOAD_XXX defines).<br>
-Strings:
-'<em>default</em>' (0), '<em>no scale</em>', '<em>no hinting</em>', '<em>render</em>', '<em>no bitmap</em>', '<em>vertical layout</em>', '<em>force autohint</em>', '<em>crop bitmap</em>', '<em>pedantic</em>', '<em>ignore global advance width</em>', '<em>no recurse</em>', '<em>ignore transform</em>', '<em>monochrome</em>', '<em>linear design</em>', '<em>no autohint</em>', '<em>color</em>', '<em>compute metrics</em>', '<em>fast only</em>', '<em>target normal</em>' (0), '<em>target light</em>', '<em>target mono</em>', '<em>target lcd</em>', '<em>target lcd v</em>'.<br>
+<div id="fstypeflags" class="paragraph">
+<p><span class="small"><strong>fstypeflags</strong>: ft.FSTYPE_XXX<br>
+Values: '<em>installable embedding</em>' (0), '<em>restricted license embedding</em>', '<em>preview and print embedding</em>', '<em>editable embedding</em>', '<em>no subsetting</em>', '<em>bitmap embedding only</em>'.<br>
+Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FSTYPE_XXX">FT_FSTYPE_XXX</a>.</span></p>
+</div>
+<div id="loadflags" class="paragraph">
+<p><span class="small"><strong>loadflags</strong>: ft.LOAD_XXX<br>
+Values: '<em>default</em>' (0), '<em>no scale</em>', '<em>no hinting</em>', '<em>render</em>', '<em>no bitmap</em>', '<em>vertical layout</em>', '<em>force autohint</em>', '<em>crop bitmap</em>', '<em>pedantic</em>', '<em>ignore global advance width</em>', '<em>no recurse</em>', '<em>ignore transform</em>', '<em>monochrome</em>', '<em>linear design</em>', '<em>no autohint</em>', '<em>color</em>', '<em>compute metrics</em>', '<em>fast only</em>', '<em>target normal</em>' (0), '<em>target light</em>', '<em>target mono</em>', '<em>target lcd</em>', '<em>target lcd v</em>'.<br>
 Note: only one target flag can be included.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_LOAD_XXX">FT_LOAD_XXX</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="orientation" class="ulist">
-<ul>
-<li>
-<p><strong>orientation</strong>: enumeration.<br>
-<span class="small">Values: '<em>fill right</em>' (truetype), '<em>fill left</em>' (postscript).<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Orientation">FT_Orientation</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="outlineflags" class="ulist">
-<ul>
-<li>
-<p><strong>outlineflags</strong>: bitfield.<br>
-<span class="small">Code: a combination of ft.OUTLINE_XXX values (corresponding to FT_OUTLINE_XXX defines).<br>
-Strings: '<em>none</em>', '<em>owner</em>', '<em>even odd fill</em>', '<em>reverse fill</em>', '<em>ignore dropouts</em>', '<em>smart dropouts</em>', '<em>include stubs</em>', '<em>high precision</em>', '<em>single pass</em>'.<br>
+<div id="outlineflags" class="paragraph">
+<p><span class="small"><strong>outlineflags</strong>: ft.OUTLINE_XXX<br>
+Values: '<em>none</em>', '<em>owner</em>', '<em>even odd fill</em>', '<em>reverse fill</em>', '<em>ignore dropouts</em>', '<em>smart dropouts</em>', '<em>include stubs</em>', '<em>high precision</em>', '<em>single pass</em>'.<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_OUTLINE_XXX">FT_OUTLINE_XXX</a>.</span></p>
-</li>
-</ul>
 </div>
-<div id="pixelmode" class="ulist">
-<ul>
-<li>
-<p><strong>pixelmode</strong>: enumeration.<br>
-<span class="small">Values: '<em>none</em>', '<em>mono</em>', '<em>gray</em>', '<em>gray2</em>', '<em>gray4</em>', '<em>lcd</em>', '<em>lcd v</em>', '<em>bgra</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Pixel_Mode">FT_Pixel_Mode</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="pointtype" class="ulist">
-<ul>
-<li>
-<p><strong>pointtype</strong>: enumeration.<br>
-<span class="small">Values: '<em>on</em>', '<em>cubic</em>', or '<em>conic</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline">FT_Outline tags</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="rendermode" class="ulist">
-<ul>
-<li>
-<p><strong>rendermode</strong>: enumeration.<br>
-<span class="small">Values: '<em>normal</em>', '<em>light</em>', '<em>mono</em>', '<em>lcd</em>', '<em>lcd v</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Render_Mode">FT_Render_Mode</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="scanmode" class="ulist">
-<ul>
-<li>
-<p><strong>scanmode</strong>: enumeration.<br>
-<span class="small">Values: '<em>none</em>', '<em>touch x</em>', '<em>touch y</em>', or '<em>touch both</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline">FT_Outline tags</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="sizerequesttype" class="ulist">
-<ul>
-<li>
-<p><strong>sizerequesttype</strong>: enumeration.<br>
-<span class="small">Values: '<em>bbox</em>', '<em>cell</em>', '<em>nominal</em>', '<em>real dim</em>', '<em>scales</em>'.<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_Request_Type">FT_Size_Request_Type</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="subglyphflags" class="ulist">
-<ul>
-<li>
-<p><strong>subglyphflags</strong>: bitfield.<br>
-<span class="small">Code: a combination of ft.SUBGLYPH_FLAG_XXX values (corresponding to FT_SUBGLYPH_FLAG_XXX defines).<br>
-Strings: 'none' (0), '<em>args are words</em>', '<em>args are xy values</em>', '<em>round xy to grid</em>', '<em>scale</em>', '<em>xy scale</em>', '<em>2x2</em>', '<em>use my metrics</em>' .<br>
+<div id="subglyphflags" class="paragraph">
+<p><span class="small"><strong>subglyphflags</strong>: ft.SUBGLYPH_FLAG_XXX<br>
+Values: 'none' (0), '<em>args are words</em>', '<em>args are xy values</em>', '<em>round xy to grid</em>', '<em>scale</em>', '<em>xy scale</em>', '<em>2x2</em>', '<em>use my metrics</em>' .<br>
 Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_SUBGLYPH_FLAG_XXX">FT_SUBGLYPH_FLAG_XXX</a>.</span></p>
-</li>
-</ul>
-</div>
-<div id="truetypeenginetype" class="ulist">
-<ul>
-<li>
-<p><strong>truetypeenginetype</strong>: enumeration.<br>
-<span class="small">Values: '<em>none</em>', '<em>patented</em>', '<em>unpatented</em>'<br>
-Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-truetype_engine.html#FT_TrueTypeEngineType">FT_TrueTypeEngineType</a>.</span></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_additional_utilities">Additional utilities</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>@@TODO</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_code_snippets">Code snippets</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>@@TODO</p>
 </div>
 </div>
 </div>
@@ -2101,7 +2051,7 @@ Rfr: <a href="https://www.freetype.org/freetype2/docs/reference/ft2-truetype_eng
 <div id="footer">
 <div id="footer-text">
 Version 0.1<br>
-Last updated 2017-08-09 20:11:14 CEST
+Last updated 2017-08-23 16:22:04 CEST
 </div>
 </div>
 </body>

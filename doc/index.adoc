@@ -44,12 +44,10 @@ include::stroker.adoc[]
 
 include::errors.adoc[]
 
-include::types.adoc[]
+include::structs.adoc[]
 
-include::enumerations.adoc[]
+include::enums.adoc[]
 
-include::additional.adoc[]
-
-include::snippets.adoc[]
+include::flags.adoc[]
 
 include::implnotes.adoc[]

@@ -195,7 +195,7 @@ static int pushsubglyph(lua_State *L, FT_GlyphSlot glyph, FT_UInt sub_index)
     lua_newtable(L);
     pushindex(L, p_index); /* glyph_index */
     lua_setfield(L, -2, "index");
-    pushsubglyphflags(L, p_flags, 1);
+    pushflags(L, p_flags); // subglyphflags
     lua_setfield(L, -2, "flags");
     lua_pushinteger(L, p_arg1);
     lua_setfield(L, -2, "arg1");

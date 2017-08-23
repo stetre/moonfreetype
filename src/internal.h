@@ -133,6 +133,9 @@ const char* fterrorstring(FT_Error ec);
     if(ec) return luaL_error((L), fterrorstring((ec)));     \
 } while(0)
 
+#define checkflags(L, arg) (FT_Int32)luaL_checkinteger((L), (arg))
+#define pushflags(L, val) lua_pushinteger((L), (val))
+
 /* bitmap.c */
 #define freebitmap moonfreetype_freebitmap
 int freebitmap(lua_State *L, FT_Bitmap *bitmap);
@@ -196,7 +199,7 @@ int freesize(lua_State *L, FT_Size *size);
 int luaopen_moonfreetype(lua_State *L);
 void moonfreetype_utils_init(lua_State *L);
 void moonfreetype_open_enums(lua_State *L);
-void moonfreetype_open_additional(lua_State *L);
+void moonfreetype_open_flags(lua_State *L);
 void moonfreetype_open_computations(lua_State *L);
 void moonfreetype_open_library(lua_State *L);
 void moonfreetype_open_face(lua_State *L);
@@ -208,32 +211,6 @@ void moonfreetype_open_pfr(lua_State *L);
 void moonfreetype_open_bitmap(lua_State *L);
 void moonfreetype_open_outline(lua_State *L);
 void moonfreetype_open_stroker(lua_State *L);
-
-/*------------------------------------------------------------------------------*
- | Bitfields and enums                                                          |
- *------------------------------------------------------------------------------*/
-
-#if 0
-#define  moonfreetype_
-#endif
-
-/* bitfield.c */
-#define checkfstypeflags moonfreetype_checkfstypeflags
-unsigned int checkfstypeflags(lua_State *L, int arg);
-#define pushfstypeflags moonfreetype_pushfstypeflags
-int pushfstypeflags(lua_State *L, unsigned int flags, int pushcode);
-#define checksubglyphflags moonfreetype_checksubglyphflags
-int checksubglyphflags(lua_State *L, int arg); 
-#define pushsubglyphflags moonfreetype_pushsubglyphflags
-int pushsubglyphflags(lua_State *L, int flags, int pushcode);
-#define checkoutlineflags moonfreetype_checkoutlineflags
-int checkoutlineflags(lua_State *L, int arg); 
-#define pushoutlineflags moonfreetype_pushoutlineflags
-int pushoutlineflags(lua_State *L, int flags, int pushcode);
-#define checkloadflags moonfreetype_checkloadflags
-FT_Int32 checkloadflags(lua_State *L, int arg);
-#define pushloadflags moonfreetype_pushloadflags
-int pushloadflags(lua_State *L, FT_Int32 flags, int pushcode);
 
 /*------------------------------------------------------------------------------*
  | Debug and other utilities                                                    |

@@ -31,7 +31,7 @@ static int Get_advance(lua_State *L)
     FT_Fixed advance;
     FT_Face *face = checkface(L, 1);
     FT_UInt glyph_index = checkindex(L, 2);
-    FT_Int32 load_flags = checkloadflags(L, 3);
+    FT_Int32 load_flags = checkflags(L, 3); // checkloadflags
     ec = FT_Get_Advance(*face, glyph_index, load_flags, &advance);
     CheckError(L, ec);
     lua_pushinteger(L, advance);
@@ -46,7 +46,7 @@ static int Get_advances(lua_State *L)
     FT_Face *face = checkface(L, 1);
     FT_UInt start = checkindex(L, 2); /* glyph_index */
     FT_UInt count = checkindex(L, 3);
-    FT_Int32 load_flags = checkloadflags(L, 4);
+    FT_Int32 load_flags = checkflags(L, 4); //checkloadflags
     if(count < 1)
         return luaL_argerror(L, 3, "positive number expected");
     padvance = (FT_Fixed*)Malloc(L, sizeof(FT_Fixed)*count);

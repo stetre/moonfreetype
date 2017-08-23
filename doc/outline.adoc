@@ -60,11 +60,11 @@ Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_proces
 [small]#Also available as _outline:get_orientation(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline_Get_Orientation++[FT_Outline_Get_Orientation].#
 
-* <<border, _border_>> = *outline_getinsideborder*(_outline_) +
+* <<strokerborder, _border_>> = *outline_getinsideborder*(_outline_) +
 [small]#Also available as _outline:getinsideborder(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetInsideBorder++[FT_Outline_GetInsideBorder].#
 
-* <<border, _border_>> = *outline_getoutsideborder*(_outline_) +
+* <<strokerborder, _border_>> = *outline_getoutsideborder*(_outline_) +
 [small]#Also available as _outline:getoutsideborder(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Outline_GetOutsideBorder++[FT_Outline_GetOutsideBorder].#
 

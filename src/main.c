@@ -123,6 +123,7 @@ int luaopen_moonfreetype(lua_State *L)
     moonfreetype_utils_init(L);
     lua_newtable(L); /* the freetype table */
     moonfreetype_open_enums(L);
+    moonfreetype_open_flags(L);
     AddVersions(L);
     AddConstants(L);
     
@@ -130,7 +131,6 @@ int luaopen_moonfreetype(lua_State *L)
 
     /* add functions: */
     luaL_setfuncs(L, Functions, 0);
-    moonfreetype_open_additional(L);
     moonfreetype_open_computations(L);
     moonfreetype_open_library(L);
     moonfreetype_open_face(L);

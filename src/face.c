@@ -120,7 +120,7 @@ static int Load_char(lua_State *L)
     FT_Int32 load_flags;
     FT_Face *face = checkface(L, 1);
     FT_ULong char_code = checkcharcode(L, 2);
-    load_flags = checkloadflags(L, 3);
+    load_flags = checkflags(L, 3); //checkloadflags
     ec = FT_Load_Char(*face, char_code, load_flags);
     CheckError(L, ec);
     return 0;
@@ -133,7 +133,7 @@ static int Load_glyph(lua_State *L)
     FT_Int32 load_flags;
     FT_Face *face = checkface(L, 1);
     FT_UInt glyph_index = checkindex(L, 2);
-    load_flags = checkloadflags(L, 3);
+    load_flags = checkflags(L, 3); //checkloadflags
     ec = FT_Load_Glyph(*face, glyph_index, load_flags);
     CheckError(L, ec);
     return 0;
@@ -342,7 +342,7 @@ static int Get_fstype_flags(lua_State *L)
     {
     FT_Face *face = checkface(L, 1);
     FT_UShort flags = FT_Get_FSType_Flags(*face);
-    pushfstypeflags(L, flags, 0);
+    pushflags(L, flags);
     return 1;
     }
 
@@ -356,17 +356,6 @@ static int Get_font_format(lua_State *L)
     lua_pushstring(L, fmt);
     return 1;
     }
-
-#if 0
-        { "",  },
-static int (lua_State *L) //@@
-    {
-    FT_Face *face = checkface(L, 1);
-    return 0;
-    }
-
-
-#endif
 
 
 /*------------------------------------------------------------------------------*

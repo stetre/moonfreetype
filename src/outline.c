@@ -135,7 +135,7 @@ int pushoutlinedata(lua_State *L, FT_Outline outline)
         lua_seti(L, -2, i+1);
         }
     lua_setfield(L, -2, "contours");
-    pushoutlineflags(L, outline.flags, 1);
+    pushflags(L, outline.flags); // outlineflags
     lua_setfield(L, -2, "flags");
     return 1;   
     }

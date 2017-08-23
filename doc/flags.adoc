@@ -1,0 +1,45 @@
+
+[[flags]]
+== Flags
+
+Flags in MoonFreeType functions and structs are always represented as plain integers,
+and encoded in the same way as the corresponding flags in the FreeType API.
+
+The *ft* table contains the FT_XXX values, renamed as *ft.XXX*
+(e.g. ft.LOAD_RENDER, ft.LOAD_NO_SCALE, etc.).
+
+For each flags type (see the list below), a utility function is also available to map
+an integer code to a list of string literals, each corresponding to an individual bit set 
+in the code, and viceversa to encode an integer value from the individual bits given 
+as a list of string literals. 
+The generic definition of such functions is the following, where *xxxflags* stands for 
+*fstypeflags*, *loadflags*, etc:
+
+[[xxxflags]]
+* _code_ = *xxxflags*(_s1_, _s2_, _..._) +
+_s1_, _s2_, _..._ = *xxxflags*(_code_) +
+[small]#Maps the integer _code_ to/from the list of string values _s1_, _s2_, _..._.#
+
+//@@ See also the <<flags_snippet, example>> contained in the code snippets section.
+
+[[fstypeflags]]
+[small]#*fstypeflags*: ft.FSTYPE_XXX +
+Values: '_installable embedding_' (0), '_restricted license embedding_', '_preview and print embedding_', '_editable embedding_', '_no subsetting_', '_bitmap embedding only_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_FSTYPE_XXX++[FT_FSTYPE_XXX].#
+
+[[loadflags]]
+[small]#*loadflags*: ft.LOAD_XXX +
+Values: '_default_' (0), '_no scale_', '_no hinting_', '_render_', '_no bitmap_', '_vertical layout_', '_force autohint_', '_crop bitmap_', '_pedantic_', '_ignore global advance width_', '_no recurse_', '_ignore transform_', '_monochrome_', '_linear design_', '_no autohint_', '_color_', '_compute metrics_', '_fast only_', '_target normal_' (0), '_target light_', '_target mono_', '_target lcd_', '_target lcd v_'. +
+Note: only one target flag can be included. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_LOAD_XXX++[FT_LOAD_XXX].#
+
+[[outlineflags]]
+[small]#*outlineflags*: ft.OUTLINE_XXX +
+Values: '_none_', '_owner_', '_even odd fill_', '_reverse fill_', '_ignore dropouts_', '_smart dropouts_', '_include stubs_', '_high precision_', '_single pass_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_OUTLINE_XXX++[FT_OUTLINE_XXX].#
+
+[[subglyphflags]]
+[small]#*subglyphflags*: ft.SUBGLYPH_FLAG_XXX +
+Values: 'none' (0), '_args are words_', '_args are xy values_', '_round xy to grid_', '_scale_', '_xy scale_', '_2x2_', '_use my metrics_' . +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_SUBGLYPH_FLAG_XXX++[FT_SUBGLYPH_FLAG_XXX].#
+

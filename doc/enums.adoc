@@ -1,0 +1,92 @@
+
+[[enums]]
+== Enums
+
+FreeType enums are mapped in MoonFreeType to sets of string literals (as is customary in Lua).
+Admitted literals are available in the *ft* table (e.g. *ft.ENCODING_XXX for FT_ENCODING_XXX),
+and can also be inferred from the corresponding C enum names. For example, given the 
+ft.ENCODING_XXX hint for the <<encoding, encoding>> enum type, the literals it admits
+are obtained by lowercasing the XXX part of the name and replacing any underscore with a space.
+
+//@@ The <<enums_snippet, example>> contained in the code snippets section should hopefully be clear enough.
+
+If needed, the following function can be used to obtain the list of literals admitted by 
+a particular enum type.
+
+[[ft.enum]]
+* {_literal_} = *ft.enum*(_enumtype_) +
+[small]#Returns a table listing the literals admitted by _enumtype_ (given as a string, e.g.
+'_ms symbol_', '_unicode_', etc).#
+
+
+[[bboxmode]]
+[small]#*bboxmode*: ft.GLYPH_BBOX_XXX +
+Values: '_unscaled_', '_gridfit_', '_truncate_', '_pixels_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_management.html#FT_Glyph_BBox_Mode++[FT_Glyph_BBox_Mode].#
+
+[[encoding]] 
+[small]#*encoding*: ft.ENCODING_XXX +
+Values: '_none_', '_ms symbol_', '_unicode_', '_sjis_', '_gb2312_', '_big5_', '_wansung_', '_johab_', '_adobe standard_', '_adobe expert_', '_adobe custom_', '_adobe latin 1_', '_apple roman_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Encoding++[FT_Encoding].#
+
+[[glyphformat]] 
+[small]#*glyphformat*: ft.GLYPH_FORMAT_XXX +
+Values: '_none_', '_composite_', '_bitmap_', '_outline_', '_plotter_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Glyph_Format++[FT_Glyph_Format].#
+
+[[kerningmode]] 
+[small]#*kerningmode*: ft.KERNING_XXX +
+Values: '_default_', '_unfitted_', '_unscaled_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Kerning_Mode++[FT_Kerning_Mode].#
+
+[[orientation]] 
+[small]#*orientation*: ft.ORIENTATION_XXX +
+Values: '_fill right_' (truetype), '_fill left_' (postscript). +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Orientation++[FT_Orientation].#
+
+[[pixelmode]] 
+[small]#*pixelmode*: ft.PIXEL_MODE_XXX +
+Values: '_none_', '_mono_', '_gray_', '_gray2_', '_gray4_', '_lcd_', '_lcd v_', '_bgra_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-basic_types.html#FT_Pixel_Mode++[FT_Pixel_Mode].#
+
+[[pointtype]]
+[small]#*pointtype*: - +
+Values: '_on_', '_cubic_', or '_conic_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline++[FT_Outline tags].#
+
+[[rendermode]] 
+[small]#*rendermode*: ft.RENDER_MODE_XXX +
+Values: '_normal_', '_light_', '_mono_', '_lcd_', '_lcd v_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Render_Mode++[FT_Render_Mode].#
+
+[[scanmode]]
+[small]#*scanmode*: - +
+Values: '_none_', '_touch x_', '_touch y_', or '_touch both_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-outline_processing.html#FT_Outline++[FT_Outline tags].#
+
+[[sizerequesttype]] 
+[small]#*sizerequesttype*: ft.SIZE_REQUEST_XXX +
+Values: '_bbox_', '_cell_', '_nominal_', '_real dim_', '_scales_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Size_Request_Type++[FT_Size_Request_Type].#
+
+[[strokerborder]] 
+[small]#*strokerborder*: ft.STROKER_BORDER_XXX +
+Values: '_left_', '_right_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_StrokerBorder++[FT_StrokerBorder].#
+
+[[strokerlinecap]] 
+[small]#*strokerlinecap*: ft.STROKER_LINECAP_XXX +
+Values: '_butt_', '_round_', '_square_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_LineCap++[FT_Stroker_LineCap].#
+
+[[strokerlinejoin]] 
+[small]#*strokerlinejoin*: ft.STROKER_LINEJOIN_XXX +
+Values: '_round_', '_bevel_', '_miter variable_', '_miter fixed_'. +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_LineJoin++[FT_Stroker_LineJoin].#
+
+
+[[truetypeenginetype]] 
+[small]#*truetypeenginetype*: ft.TRUETYPE_ENGINE_TYPE_XXX +
+Values: '_none_', '_patented_', '_unpatented_' +
+Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-truetype_engine.html#FT_TrueTypeEngineType++[FT_TrueTypeEngineType].#
+

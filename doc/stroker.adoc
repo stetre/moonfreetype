@@ -25,7 +25,7 @@ Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.
 [small]#Also available as _stroker:rewind(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Rewind++[FT_Stroker_Rewind].#
 
-* *stroker_set*(_stroker_, _radius_, <<linecap, _linecap_>>, <<linejoin, _linejoin_>>, _miterlimit_) +
+* *stroker_set*(_stroker_, _radius_, <<strokerlinecap, _linecap_>>, <<strokerlinejoin, _linejoin_>>, _miterlimit_) +
 [small]#Also available as _stroker:set(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Set++[FT_Stroker_Set].#
 
@@ -48,7 +48,7 @@ Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.
 [small]#Also available as _stroker:getcounts(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetCounts++[FT_Stroker_GetCounts].#
 
-* _numpoints_, _numcontours_ = *stroker_getbordercounts*(_stroker_, <<border, _border_>>) +
+* _numpoints_, _numcontours_ = *stroker_getbordercounts*(_stroker_, <<strokerborder, _border_>>) +
 [small]#Also available as _stroker:getbordercounts(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_GetBorderCounts++[FT_Stroker_GetBorderCounts].#
 
@@ -63,7 +63,7 @@ Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.
 Also available as _stroker:export(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_Export++[FT_Stroker_Export].#
 
-* *stroker_exportborder*(_stroker_, <<border, _border_>>, <<outline, _outline_>>) +
+* *stroker_exportborder*(_stroker_, <<strokerborder, _border_>>, <<outline, _outline_>>) +
 [small]#Stroker and outline must belong to the same library. +
 Also available as _stroker:exportborder(&nbsp;)_ method. +
 Rfr: link:++https://www.freetype.org/freetype2/docs/reference/ft2-glyph_stroker.html#FT_Stroker_ExportBorder++[FT_Stroker_ExportBorder].#
