@@ -189,9 +189,8 @@ int freeoutline(lua_State *L, FT_Outline *outline)
 static int Delete(lua_State *L)
     {
     FT_Outline *outline = testoutline(L, 1);
-    if(outline)
-        return freeoutline(L, outline);
-    return 0;
+    if(!outline) return 0; /* already deleted */
+    return freeoutline(L, outline);
     }
 
 static int Outline_copy(lua_State *L)

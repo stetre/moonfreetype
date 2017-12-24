@@ -118,7 +118,8 @@ int freeglyph(lua_State *L, FT_Glyph *glyph)
 
 static int Delete(lua_State *L)
     {
-    FT_Glyph *glyph = checkglyph(L, 1);
+    FT_Glyph *glyph = testglyph(L, 1);
+    if(!glyph) return 0; /* already deleted */
     return freeglyph(L, glyph);
     }
 

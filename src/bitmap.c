@@ -136,9 +136,8 @@ int freebitmap(lua_State *L, FT_Bitmap *bitmap)
 static int Delete(lua_State *L)
     {
     FT_Bitmap *bitmap = testbitmap(L, 1);
-    if(bitmap)
-        return freebitmap(L, bitmap);
-    return 0;
+    if(!bitmap) return 0; /* already deleted */
+    return freebitmap(L, bitmap);
     }
 
 static int Bitmap_copy(lua_State *L)

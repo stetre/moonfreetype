@@ -89,7 +89,8 @@ int freesize(lua_State *L, FT_Size *size)
 
 static int Delete(lua_State *L)
     {
-    FT_Size *size = checksize(L, 1);
+    FT_Size *size = testsize(L, 1);
+    if(!size) return 0; /* already deleted */
     return freesize(L, size);
     }
 

@@ -89,7 +89,8 @@ int freestroker(lua_State *L, FT_Stroker *stroker)
 
 static int Delete(lua_State *L)
     {
-    FT_Stroker *stroker = checkstroker(L, 1);
+    FT_Stroker *stroker = teststroker(L, 1);
+    if(!stroker) return 0; /* already deleted */
     return freestroker(L, stroker);
     }
 

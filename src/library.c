@@ -117,7 +117,8 @@ static int Freeoutline(lua_State *L, const void *outline, const void *library)
 static int Delete(lua_State *L)
     {
     FT_Error ec;
-    FT_Library *library = checklibrary(L, 1);
+    FT_Library *library = testlibrary(L, 1);
+    if(!library) return 0; /* already deleted */
     /* delete all contained objects */
     udata_scan(L, BITMAP_MT, *library, Freebitmap);
     udata_scan(L, OUTLINE_MT, *library, Freeoutline);

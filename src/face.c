@@ -109,7 +109,8 @@ int freeface(lua_State *L, FT_Face *face)
 
 static int Delete(lua_State *L)
     {
-    FT_Face *face = checkface(L, 1);
+    FT_Face *face = testface(L, 1);
+    if(!face) return 0; /* already deleted */
     return freeface(L, face);
     }
 
