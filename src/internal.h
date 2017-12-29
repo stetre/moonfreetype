@@ -32,6 +32,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <inttypes.h>
 #include "moonfreetype.h"
 #include FT_ADVANCES_H
 #include FT_MODULE_H
