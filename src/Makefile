@@ -27,16 +27,6 @@ ifeq ($(D),1)
 DEBUG=1
 endif
 
-ifdef LINUX
-INCDIR = -I/usr/include
-LIBDIR = -L/usr/lib
-LIBS = -lfreetype
-endif
-ifdef MINGW
-LIBS = -lfreetype -llua
-endif
-
-
 Tgt	:= moonfreetype
 Src := $(wildcard *.c)
 Objs := $(Src:.c=.o)
@@ -49,9 +39,13 @@ COPT    += -std=gnu99
 ifdef LINUX
 COPT    += -fpic
 COPT	+= -DLINUX
+INCDIR = -I/usr/include -I/usr/include/lua$(V)
+LIBDIR = -L/usr/lib
+LIBS = -lfreetype
 endif
 ifdef MINGW
 COPT	+= -DMINGW
+LIBS = -lfreetype -llua
 endif
 ifdef DEBUG
 COPT	+= -DDEBUG
