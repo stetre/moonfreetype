@@ -6,7 +6,7 @@ LINUX=1
 endif
 
 # Lua version:
-V=5.3
+LUAVER=5.3
 # Base install directory:
 ifdef LINUX
 PREFIX = /usr/local
@@ -15,9 +15,9 @@ ifdef MINGW
 PREFIX = $(MINGW_PREFIX)
 endif
 # Directory where to install Lua modules:
-L_DIR = $(PREFIX)/share/lua/$(V)
+L_DIR = $(PREFIX)/share/lua/$(LUAVER)
 # Directory where to install C modules:
-C_DIR = $(PREFIX)/lib/lua/$(V)
+C_DIR = $(PREFIX)/lib/lua/$(LUAVER)
 # Directory where to install C headers:
 H_DIR = $(PREFIX)/include
 # Directory where to install C libraries:
@@ -39,7 +39,7 @@ COPT    += -std=gnu99
 ifdef LINUX
 COPT    += -fpic
 COPT	+= -DLINUX
-INCDIR = -I/usr/include -I/usr/include/lua$(V)
+INCDIR = -I/usr/include -I/usr/include/lua$(LUAVER)
 LIBDIR = -L/usr/lib
 LIBS = -lfreetype
 endif
