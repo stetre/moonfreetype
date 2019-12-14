@@ -6,7 +6,7 @@ LINUX=1
 endif
 
 # Lua version:
-LUAVER=5.3
+LUAVER?=5.3
 # Base install directory:
 ifdef LINUX
 PREFIX = /usr/local
@@ -36,6 +36,7 @@ COPT	+= -O2
 #COPT	+= -O0 -g
 COPT	+= -Wall -Wextra -Wpedantic
 COPT    += -std=gnu99
+COPT    += -DLUAVER=$(LUAVER)
 ifdef LINUX
 COPT    += -fpic
 COPT	+= -DLINUX
