@@ -36,6 +36,7 @@ COPT	+= -O2
 #COPT	+= -O0 -g
 COPT	+= -Wall -Wextra -Wpedantic
 COPT    += -std=gnu99
+COPT	+= -DCOMPAT53_PREFIX=moonfreetype_compat_
 COPT    += -DLUAVER=$(LUAVER)
 ifdef LINUX
 COPT    += -fpic
