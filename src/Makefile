@@ -62,7 +62,7 @@ COPT    += -Wmissing-prototypes -Wstrict-prototypes -Wnested-externs
 COPT    += -Wc++-compat -Wold-style-definition
 endif
 
-override CFLAGS = $(COPT) $(INCDIR) $(shell freetype-config --cflags)
+override CFLAGS = $(COPT) $(INCDIR) $(shell pkg-config freetype2 --cflags)
 
 default: build
 
